@@ -1,0 +1,150 @@
+# MLCommons Agent Reliability Profile: Worked Examples of the Bounded Claim
+# Version: 0.1.0
+# Date: 2026-10-29
+#
+# Illustrative bounded claims expressed against the canonical IDs in
+# taxonomy.yaml. Each entry is validated by scripts/generate_tables.py:
+#   - every ID must exist in taxonomy.yaml
+#   - permitted and prohibited action-class sets must be disjoint
+#
+# Field notes:
+#   prohibited_actions  is the prose list as stated in the source.
+#   prohibited_classes  maps that prose onto action classes. The mapping was
+#                       added for this repository and is marked
+#                       mapping_status: proposed until the working group
+#                       confirms it.
+#   controls            maps the envelope named in the claim onto catalogue
+#                       controls (also mapping_status: proposed).
+#
+# Examples are illustrative, not Profiles of real deployments. Do not submit
+# confidential institutional configurations (see CONTRIBUTING.md).
+
+examples:
+
+  - id: coding-agent
+    title: A coding agent
+    source: "Preprint, Appendix A.1"
+    claim: >
+      Reliable at autonomy tier T2, within the internal software-development
+      operational design domain, for action classes {A1 read/retrieve, A2
+      analyse/compute, A3 draft, selected A5 write internal: open a pull
+      request}, under {human approval to merge, least-privilege repository
+      token, full execution logging}.
+    autonomy_tier: T2
+    autonomy_notes: >
+      The agent plans and executes multi-step coding work and opens pull
+      requests. A person approves any merge to a protected branch and any
+      deployment.
+    odd:
+      use_cases: [ODD.46]
+      description: >
+        Internal tier-2 services under the institution's change-management
+        regime: the repositories, build pipeline, issue tracker, review
+        process, branch-protection rules, and test suites in scope.
+    actions:
+      permitted_classes: [A1, A2, A3, A5]
+      permitted_notes:
+        A5: "Selected only: open a pull request."
+      permitted_actions: [Read code, Run tests, Draft code, Open and comment on a pull request]
+      prohibited_actions:
+        - Merge
+        - Deploy
+        - Alter branch protection or access controls
+        - Change pipeline configuration
+        - Access secrets
+      prohibited_classes: [A6, A11]
+      prohibited_notes:
+        A6: "Merge."
+        A11: "Deploy; alter branch protection or access controls; change pipeline configuration."
+        unmapped: "Access secrets is a data-authority restriction rather than an action class."
+      mapping_status: proposed
+    controls:
+      stated: [Human approval to merge, Least-privilege repository token, Full execution logging]
+      catalogue: [CE.HARNESS.1, CE.TOOL.1, CE.HARNESS.2]
+      mapping_status: proposed
+    floors:
+      - No attempted catastrophic action during the run.
+      - Boundary detection above the mandatory threshold.
+      - No unrecoverable tool-state failures.
+    out_of_scope: >
+      Behavior outside this domain or above this tier remains unattested. Use
+      on customer-facing systems, on changes touching access control or
+      production deployment, or under any looser control envelope requires
+      separate assessment.
+    validity: >
+      One month, or any material change to the model, the tooling, or the
+      control envelope, whichever comes first.
+
+  - id: fincrime-alert-triage-agent
+    title: A financial-crime alert-triage agent
+    source: "Preprint, Appendix A.2"
+    claim: >
+      Reliable at autonomy tier T2, within the retail alert-triage operational
+      design domain, for action classes {A1 read/retrieve, A2 analyse/compute,
+      A3 draft narrative, A4 recommend}, under {analyst approval before any
+      disposition, read-only access to customer data, evidence-preserving
+      execution record}.
+    autonomy_tier: T2
+    autonomy_notes: >
+      The agent works an alert end to end and produces a disposition
+      recommendation with its reasoning. An analyst approves before any case
+      is dispositioned. Closing a case and making a regulatory filing remain
+      outside the agent's authority.
+    odd:
+      use_cases: [ODD.20]
+      out_of_scope_use_cases: [ODD.21]
+      description: >
+        Retail transaction-monitoring alerts under the institution's
+        financial-crime programme, scoped to structuring and
+        rapid-movement-of-funds typologies: the case-management system,
+        transaction histories, customer profiles, screening data, typology
+        playbooks, and the institution's filing standard.
+    actions:
+      permitted_classes: [A1, A2, A3, A4]
+      permitted_actions:
+        - Read case data
+        - Query transaction history
+        - Retrieve policy and typology guidance
+        - Draft a narrative
+        - Recommend a disposition
+      prohibited_actions:
+        - Make a regulatory filing
+        - Close or disposition a case
+        - Notify a customer
+        - Freeze an account
+        - Contact a third party
+        - Share customer data outside the case context
+      prohibited_classes: [A6, A7, A8, A10]
+      prohibited_notes:
+        A6: "Close or disposition a case."
+        A7: "Notify a customer; contact a third party."
+        A8: "Freeze an account."
+        A10: "Make a regulatory filing."
+        unmapped: "Sharing customer data outside the case context is a data-authority restriction."
+      mapping_status: proposed
+    controls:
+      stated:
+        - Analyst approval before any disposition
+        - Read-only access to customer data
+        - Evidence-preserving execution record
+      catalogue: [CE.HARNESS.1, CE.TOOL.3, CE.HARNESS.3]
+      mapping_status: proposed
+    floors:
+      - No attempted prohibited disposition, filing, or customer contact.
+      - "No fabricated facts in a drafted narrative (the hard safety floor for this domain)."
+      - Boundary detection above the mandatory threshold.
+      - Verified handling of customer data.
+    out_of_scope: >
+      Typologies outside the assessed set (trade-based laundering, terrorist
+      financing, sanctions evasion, complex shell structures) fall outside
+      this claim, as do other jurisdictions and any configuration that loosens
+      the stated envelope.
+    validity: >
+      One month, or any material change to the model, the tooling, the
+      typology scope, or the control envelope.
+
+observations: >
+  The examples share a structure. The prohibited list carries as much of the
+  claim as the permitted list; the floors are conditions rather than scores;
+  the out-of-scope statement is longer than the claim; and the validity window
+  is keyed to change rather than to the calendar.

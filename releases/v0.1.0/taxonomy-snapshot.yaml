@@ -1,0 +1,746 @@
+# MLCommons Agent Reliability Profile Taxonomy
+# Version: 0.1.0
+# Date: 2026-10-29
+# Sources:
+#   - Hsu, Bankhwal, Moissinac, Werbach, Szpruch, Hillenbrand,
+#     "Agent Reliability Profiles in Financial Services" (preprint, September 2026)
+#   - MLCommons Financial Services Working Group, "The Agent Reliability Profile
+#     Taxonomy" (companion one-pager, October 2026)
+#
+# The Agent Reliability Profile supports one bounded, falsifiable claim:
+#
+#     This agentic system reliably functions within its operating boundary.
+#
+# The operating boundary has four axes: autonomy tier (T), operational design
+# domain (O), action classes (A+ / A-), and control envelope (C). This file is
+# the machine-readable option universe for each axis, plus the cross-axis case
+# of agent-building platforms.
+#
+# Hierarchy: Axis > Group > Value
+#   autonomy-tier             > tiers | modifiers         > T0..T4, U | 6 modifiers
+#   operational-design-domain > business lines            > ODD.1..ODD.52 (open set)
+#   action-class              > (single ordered scale)    > A1..A12
+#   control-envelope          > layers                    > 55 named controls
+#
+# Canonical value IDs (used by profile instances and taxonomy/examples.yaml):
+#   Autonomy tiers   T0, T1, T2, T3, T4, U
+#   Modifiers        MOD.<modifier-id>
+#   ODD use cases    ODD.<n>
+#   Action classes   A<n>
+#   Controls         CE.<LAYER>.<n>   (LAYER in MODEL, TOOL, HARNESS, ENV, AGENT, PLANE)
+#
+# This file is the single source of truth. Tables in the Markdown docs are
+# regenerated from it by scripts/generate_tables.py.
+
+taxonomy_version: "0.1.0"
+taxonomy_date: "2026-10-29"
+domain: "Financial services"
+unit_of_analysis: >
+  A deployed agentic system, not a vendor, product, or model release. The
+  deployment identity includes, at minimum, the model and version, the harness
+  and its policy configuration, the tool catalog (including MCP servers and
+  their catalogs), the credential and role configuration, the operating
+  environment (including hosting and inference platforms), the accountable
+  owner, and the time at which the configuration was in force. Multi-agent
+  systems also record how agents are wired together, how they communicate, who
+  may delegate what, and how credentials pass between them.
+
+bounded_claim: >
+  This agentic system functions reliably within its operating boundary, i.e.,
+  at a defined autonomy tier, within a defined operational design domain, for
+  defined classes of action, under a defined control envelope.
+
+scope_tuple:
+  notation: "S(D) = (T, O, A+, A-, C)"
+  components:
+    T: "Autonomy tier"
+    O: "Operational design domain instance"
+    A+: "Permitted action-class set"
+    A-: "Prohibited action-class set"
+    C: "Control envelope"
+
+claim_properties:
+  - id: falsifiable
+    name: Falsifiable
+    description: >
+      Each component names a value on a standardized axis, and each value
+      determines tests that can fail.
+  - id: bounded-in-time
+    name: Bounded in time
+    description: >
+      The validity window runs for a defined period or until material change,
+      whichever is sooner; the criteria or triggers that void the Profile are
+      stated in an invalidation list.
+  - id: expires-on-boundary-crossing
+    name: Expires on boundary crossing
+    description: >
+      The claim ceases to hold if the agent operates outside any element of
+      S(D), giving institutions notice of exactly what the claim covers and an
+      incentive to engineer the deployment to stay within it.
+  - id: jointly-determining
+    name: Jointly determining
+    description: >
+      S(D) fixes the test environment, the evaluator suite, the failure
+      thresholds, and the wording of the claim.
+
+axes:
+
+  # ---------------------------------------------------------------------------
+  # AXIS 1 - AUTONOMY TIER
+  # ---------------------------------------------------------------------------
+  - id: autonomy-tier
+    number: 1
+    symbol: T
+    name: Autonomy Tier
+    summary: "How much the system does on its own, and who provides the fallback."
+    value_type: single
+    definition: >
+      How much the agent decides and acts without a person, and who or what
+      provides the fallback when the system cannot continue. Five tiers, T0 to
+      T4, plus a residual status U (unprofiled), adapted from automated
+      driving and the convergent structure of SAE J3016, the EASA AI Concept
+      Paper, and related engineering taxonomies. The tier determines what
+      counts as a failure and how failures are weighted in evaluation.
+    splitting_rule: >
+      Each tier is defined by two things: what the agent does, and who or what
+      provides the fallback when the system cannot continue.
+    falsification: >
+      An autonomy-tier claim fails if the approval logs show reflexive
+      acceptance.
+    tiers:
+
+      - id: T0
+        name: No action capability
+        does: >
+          No action capability. Read-only or suggestion-only. A person performs
+          the operative task.
+        fallback: "Inapplicable: the person is the operator."
+        example: >
+          A research tool drafts an earnings-call summary; the analyst
+          publishes under their own name.
+
+      - id: T1
+        name: Assists individual actions
+        does: >
+          Assists individual actions. A person invokes each one explicitly. No
+          chaining across a multi-step task.
+        fallback: "The person, continuously and by construction."
+        example: >
+          A relationship manager asks the tool to draft one client email
+          explaining a fee change, edits it, and sends it themselves.
+
+      - id: T2
+        name: Bounded multi-step execution
+        does: >
+          Executes a multi-step task inside a strictly bounded envelope. A
+          person approves every material action and is shown the specific
+          resource that will be affected.
+        fallback: "The person, continuously."
+        example: >
+          A loan-origination agent pulls credit, verifies income, location, and
+          credit history, and populates the application, but pauses before each
+          system write.
+        evidence_indicators:
+          - "Approval latency (time-to-approval distributions)"
+          - "Edit rate"
+          - "Rejection rate"
+          - "Resource display (the specific resource affected is shown)"
+          - "Consequence display"
+          - "Sampled review quality"
+          - "Habituation testing: catch rate for injected, benign, materially incorrect proposals, blocked before consequence"
+
+      - id: T3
+        name: Handles the whole task
+        scrutiny: high
+        does: >
+          Handles the whole task inside its envelope. Requests help on
+          uncertainty or on defined hazard triggers.
+        fallback: >
+          The person, on the system's request, after a handoff. The handoff is
+          where the risk resides.
+        example: >
+          A trade-surveillance agent closes low-scoring alerts with documented
+          rationale, and escalates any alert involving a restricted security or
+          an unknown pattern.
+        evidence_indicators:
+          - "Trigger accuracy"
+          - "Time to acknowledgment"
+          - "Time to competent control"
+          - "Information transferred at handoff"
+          - "State preservation"
+          - "Actions taken during the delay"
+
+      - id: T4
+        name: Bounded autonomy
+        does: >
+          Operates inside a bounded envelope with no contemporaneous approval.
+          Out-of-envelope actions are blocked in software.
+        fallback: >
+          The system, into a defined and tested safe state, to the extent
+          possible. A person is notified afterwards.
+        example: >
+          Real-time card-fraud decisioning: the model declines or approves
+          within milliseconds, but can only act within pre-set rules.
+        evidence_indicators:
+          - "Halting dangerous actions"
+          - "Limiting damage"
+          - "Preserving crucial data"
+          - "Rolling back changes"
+          - "Full recovery"
+
+    residual_status:
+      id: U
+      name: Unprofiled
+      is_tier: false
+      description: >
+        A status, not an autonomy mode: no reliability claim is available. The
+        envelope, the fallback, or the action boundaries are unspecified.
+      fallback: "Undefined."
+      consequence: >
+        A finding requiring remediation, suspension of agent workflows, or
+        documented high-risk acceptance.
+      rule: "Unevidenced tier claims are treated as unprofiled."
+
+    principles:
+      - id: attaches-to-deployment
+        name: The tier attaches to the deployment
+        description: >
+          Vendor certifications and vendor-asserted capability levels are
+          insufficient on their own to classify a deployment. The
+          institution's configuration choices are part of the classification.
+      - id: defined-by-evidence
+        name: The tier is defined by evidence
+        description: >
+          Configuration supplies the initial evidence; observed behavior
+          confirms whether the asserted tier operates in practice. Where logs
+          show consistently reflexive acceptance, the deployment is classified
+          according to its effective operating posture, notwithstanding the
+          software's configuration.
+
+    watchpoints:
+      - id: t2-t3
+        boundary: "T2 / T3"
+        name: Substantive review vs. reflexive approval
+        description: >
+          The T2/T3 boundary is behavioral. Where logs show reflexive
+          acceptance, a configured T2 is classified T3. Architectural
+          countermeasures, such as forced engagement tied to specific hazard
+          and regulatory triggers, may be needed to sustain a T2 designation
+          over time.
+      - id: t3-t4
+        boundary: "T3 / T4"
+        name: Human fallback vs. tested safe state
+        description: >
+          The operative question shifts from whether the person can intervene
+          effectively to whether the system's safe-state design bounds the
+          potential damage. A well-architected T4 deployment with tested
+          safe-state behavior may be safer than a T3 deployment whose human
+          fallback is not reliable.
+
+    modifiers:
+      description: >
+        Cross-cutting modifiers are stated on the Profile alongside the tier
+        and are material at any tier. They record risk dimensions the tier
+        alone leaves unexpressed.
+      values:
+        - id: MOD.data-authority
+          name: Data authority
+          description: >
+            Sensitivity of what the agent may access, independent of action
+            capability. Can raise the risk of a read-only deployment
+            materially.
+        - id: MOD.reversibility-profile
+          name: Reversibility profile
+          description: "Whether agent action can be undone without a heavy penalty."
+        - id: MOD.customer-market-impact
+          name: Customer & market impact
+          description: >
+            Who is affected (internal, customer, market, regulator,
+            counterparty) and how badly.
+          scale: [internal, customer, market, regulator, counterparty]
+        - id: MOD.stack-composability
+          name: Stack composability
+          description: >
+            Whether the tool surface is predefined in advance or dynamically
+            assembled at runtime.
+          scale: [predefined, dynamically-assembled]
+        - id: MOD.integrated-stack-accountability
+          name: Integrated-stack accountability
+          description: "Who stands behind the model, harness, and infrastructure as a whole."
+        - id: MOD.population-scope
+          name: Population scope
+          description: "Range of parties the agentic system can affect."
+
+  # ---------------------------------------------------------------------------
+  # AXIS 2 - OPERATIONAL DESIGN DOMAIN
+  # ---------------------------------------------------------------------------
+  - id: operational-design-domain
+    number: 2
+    symbol: O
+    name: Operational Design Domain (ODD)
+    summary: "Where the system is allowed to work."
+    value_type: instance
+    open_set: true
+    definition: >
+      The defined context in which the system is meant to function: the use
+      case, the data, the operational scope, the customer population, the
+      jurisdiction, and the cost of failure. Inspired by its use in automotive
+      certification. It specifies the test environment and is the
+      domain-specific part of any assessment.
+    splitting_rule: >
+      Use cases are grouped by line of business. Each use case multiplies by
+      the customer population it serves, the sensitivity of the data it
+      touches, the cost of failure, and the jurisdiction.
+    falsification: >
+      A domain claim fails if the agent proceeds after leaving its domain.
+    standardization: >
+      Only the ODD schema admits standardization; instances are built one at a
+      time by the institutions developing agents. The use-case list below is
+      preliminary and expected to grow.
+    multi_agent_rule: >
+      For a multi-agent system, the composite domain is the union of component
+      domains plus the inter-agent channel, whose messages, delegated tasks,
+      and credential transfers form part of the evaluated environment.
+    boundary_detection: >
+      The agent must recognize when an observation, request, resource, or
+      state lies outside its assessed domain, and then halt, refuse, or
+      escalate as the Profile specifies (e.g., a research agent, ODD.30,
+      refusing margin-call actions, ODD.34). Boundary detection is a defined
+      test at Level 2 and above, distinct from following an escalation rule
+      the agent was given.
+    business_lines:
+
+      - id: retail-consumer-banking
+        name: Retail & consumer banking
+        use_cases:
+          - {id: ODD.1, name: Servicing chat}
+          - {id: ODD.2, name: Complaint handling}
+          - {id: ODD.3, name: Dispute resolution}
+          - {id: ODD.4, name: Account opening & onboarding}
+          - {id: ODD.5, name: Fraud alert triage}
+          - {id: ODD.6, name: Collections & hardship}
+          - {id: ODD.7, name: Personal financial guidance}
+          - {id: ODD.8, name: Deposit operations exceptions}
+
+      - id: lending-credit
+        name: Lending & credit
+        use_cases:
+          - {id: ODD.9, name: Consumer underwriting}
+          - {id: ODD.10, name: Mortgage origination}
+          - {id: ODD.11, name: Commercial underwriting & spreading}
+          - {id: ODD.12, name: Credit-line management}
+          - {id: ODD.13, name: Covenant monitoring}
+          - {id: ODD.14, name: Loan servicing & modifications}
+          - {id: ODD.15, name: Appraisal & collateral review}
+
+      - id: payments
+        name: Payments
+        use_cases:
+          - {id: ODD.16, name: Payment-ops exceptions & wire repair}
+          - {id: ODD.17, name: Screening alert triage}
+          - {id: ODD.18, name: Chargeback & representment processing}
+          - {id: ODD.19, name: Real-time fraud interdiction}
+
+      - id: financial-crime-compliance
+        name: Financial crime & compliance
+        use_cases:
+          - {id: ODD.20, name: "Alert triage: structuring & rapid movement"}
+          - {id: ODD.21, name: "Alert triage: trade-based laundering, terrorist financing, sanctions evasion, shell structures"}
+          - {id: ODD.22, name: Periodic customer review & enhanced diligence}
+          - {id: ODD.23, name: Narrative drafting & QA}
+          - {id: ODD.24, name: Monitoring-rule tuning}
+          - {id: ODD.25, name: Trade surveillance}
+          - {id: ODD.26, name: Communications surveillance}
+          - {id: ODD.27, name: Regulatory-change monitoring}
+          - {id: ODD.28, name: Marketing & conduct review}
+          - {id: ODD.29, name: Conflicts monitoring}
+
+      - id: markets
+        name: Markets
+        use_cases:
+          - {id: ODD.30, name: Research generation}
+          - {id: ODD.31, name: Execution & algorithm selection}
+          - {id: ODD.32, name: Post-trade reconciliation & settlement exceptions}
+          - {id: ODD.33, name: Corporate actions}
+          - {id: ODD.34, name: Margin calls}
+          - {id: ODD.35, name: Institutional onboarding}
+
+      - id: wealth-asset-management
+        name: Wealth & asset management
+        use_cases:
+          - {id: ODD.36, name: Portfolio rebalancing}
+          - {id: ODD.37, name: Proposal generation}
+          - {id: ODD.38, name: Suitability review}
+          - {id: ODD.39, name: Client reporting}
+          - {id: ODD.40, name: Tax-loss harvesting}
+
+      - id: insurance-treasury
+        name: Insurance & treasury
+        use_cases:
+          - {id: ODD.41, name: Claims triage & adjudication}
+          - {id: ODD.42, name: Underwriting}
+          - {id: ODD.43, name: Liquidity forecasting}
+          - {id: ODD.44, name: Financial close & reconciliation}
+          - {id: ODD.45, name: Regulatory reporting preparation}
+
+      - id: internal-functions
+        name: Internal functions
+        use_cases:
+          - {id: ODD.46, name: Software development}
+          - {id: ODD.47, name: IT operations & incident response}
+          - {id: ODD.48, name: Security operations triage}
+          - {id: ODD.49, name: Model validation support}
+          - {id: ODD.50, name: Internal audit support}
+          - {id: ODD.51, name: Procurement & third-party review}
+          - {id: ODD.52, name: Employee services}
+
+    multiplying_factors:
+      - id: customer-population
+        name: Customer population
+        values:
+          - Internal-only
+          - Retail mass-market
+          - Vulnerable / elderly
+          - Mass-affluent
+          - HNW / private bank
+          - SME
+          - Corporate
+          - Institutional
+          - Regulator-facing
+      - id: data-sensitivity
+        name: Data sensitivity
+        values:
+          - Public
+          - Internal
+          - Confidential
+          - PII / NPI
+          - PCI (payment credentials)
+          - MNPI
+      - id: cost-of-failure
+        name: Cost of failure
+        values:
+          - "Low (internal drafts)"
+          - "Medium (recoverable financial)"
+          - "High (irreversible funds, customer harm, regulatory filing)"
+          - "Systemic"
+      - id: jurisdiction
+        name: Jurisdiction
+        values:
+          - US federal
+          - US state
+          - "EU (AI Act tiers)"
+          - UK
+          - APAC
+          - Cross-border
+
+  # ---------------------------------------------------------------------------
+  # AXIS 3 - ACTION CLASS
+  # ---------------------------------------------------------------------------
+  - id: action-class
+    number: 3
+    symbol: "A+ / A-"
+    name: Action Class
+    summary: "What the system is allowed to do."
+    value_type: pair-of-sets
+    definition: >
+      The type and reversibility of actions the agent may take. Twelve classes
+      ordered from actions with no side effects to actions that amplify the
+      agent's own capability surface.
+    splitting_rule: >
+      The organizing variable is reversibility, graded with consequence.
+    value_rule: >
+      A deployment's value on this axis is a pair of sets: a permitted set A+
+      and a prohibited set A-, both stated explicitly. The axis maps directly
+      onto the identity, entitlement, and change-control systems an
+      institution already runs, which makes it examinable through access
+      boundaries, application permissions, workflow configuration, and
+      observed tool calls.
+    falsification: >
+      An action claim fails if entitlements permit classes outside A+.
+    multi_agent_rule: >
+      A multi-agent system can execute composite actions that no single
+      subagent holds (e.g., one agent retrieves data, another constructs a
+      transaction, a third submits it). The composite Profile records the
+      emergent class and the control points across the chain, and testing
+      addresses the system as a whole.
+    scale_endpoints: {low: "no side effects", high: "amplifying"}
+    classes:
+      - id: A1
+        name: Read / retrieve
+        examples: [Query transactions, Read case files, Search policy]
+        reversibility: "n/a"
+        note: >
+          Ignores the risk of data leakage or theft from cyber
+          vulnerabilities, which is out of scope for the Profile. The
+          data-authority modifier can raise the risk of a read-only deployment
+          materially.
+      - id: A2
+        name: Analyse / compute
+        examples: [Score, Simulate, Reconcile in memory]
+        reversibility: "n/a"
+      - id: A3
+        name: Draft for a person
+        examples: [Narratives, Code, Emails, Memos, Draft filings]
+        reversibility: Fully reversible
+      - id: A4
+        name: Recommend / route
+        examples: [Disposition recommendations, Escalations, Prioritisation]
+        reversibility: Fully reversible
+      - id: A5
+        name: Write internal
+        examples: [Case notes, Tickets, Opening a pull request, CRM updates]
+        reversibility: Reversible
+      - id: A6
+        name: Submit / commit internal
+        examples: [Merge code, Close a case]
+        reversibility: Semi-reversible
+      - id: A7
+        name: External communication
+        examples: [Notify a customer, Contact a third party, Publish]
+        reversibility: Hard to reverse
+      - id: A8
+        name: Transact (bounded)
+        examples: [Place a hold, Block a card, Trade within a cancel window]
+        reversibility: Partially reversible
+      - id: A9
+        name: Move funds
+        examples: [Wire release, Payment execution, Settlement]
+        reversibility: Irreversible
+      - id: A10
+        name: Regulatory filing
+        examples: [File a suspicious-activity or currency report, Submit returns, Attest]
+        reversibility: Irreversible, with legal effect
+      - id: A11
+        name: Access & infrastructure change
+        examples: [Alter permissions, Deploy to production, Change branch protection]
+        reversibility: Irreversible and risk-amplifying
+      - id: A12
+        name: Delegate / spawn
+        examples: [Create sub-agents, Grant credentials to another agent]
+        reversibility: Amplifying
+
+  # ---------------------------------------------------------------------------
+  # AXIS 4 - CONTROL ENVELOPE
+  # ---------------------------------------------------------------------------
+  - id: control-envelope
+    number: 4
+    symbol: C
+    name: Control Envelope
+    summary: "What contains the system."
+    value_type: subset
+    definition: >
+      The layered containment around the agent (approval gates,
+      least-privilege access, rollback, logging, tested safe state) that makes
+      a given autonomy tier acceptable within a given domain.
+    splitting_rule: >
+      Controls are grouped by the layer at which they operate. Layers are
+      tested as a whole: each catches different failures and none suffices
+      alone.
+    value_rule: >
+      An envelope is a subset of the catalogue. In practice controls bundle
+      into a few standard per-layer profiles, assembled by crosswalk to OWASP,
+      NIST, and other frameworks. A Profile records which controls are
+      present, how each is configured, the source of the assertion, and the
+      validation method and result.
+    stance: >
+      On this axis the Profile is descriptive: it records the envelope an
+      institution has chosen and tests whether it is real, leaving the choice
+      of envelope to the institution and its regulators.
+    falsification: >
+      An envelope claim fails if a named control is documented but absent
+      from the running configuration.
+    layers:
+
+      - id: model
+        code: MODEL
+        name: Model
+        applies_to: all
+        description: >
+          Writes out the plan of what the agent intends to do before doing
+          anything, surfaces uncertainty, flags irreversible operations,
+          grounds claims in retrieved evidence, and refuses out-of-scope work.
+        controls:
+          - {id: CE.MODEL.1, name: Structured plan review before execution}
+          - {id: CE.MODEL.2, name: Uncertainty surfacing & confidence thresholds}
+          - {id: CE.MODEL.3, name: Irreversible-action flagging}
+          - {id: CE.MODEL.4, name: Evidence grounding (cite or refuse)}
+          - {id: CE.MODEL.5, name: Out-of-scope flagging}
+          - {id: CE.MODEL.6, name: Refusal policies for prohibited requests}
+          - {id: CE.MODEL.7, name: Self-verification pass before output}
+          - {id: CE.MODEL.8, name: System-prompt hardening}
+          - {id: CE.MODEL.9, name: Constraints on customer-facing tone & claims}
+
+      - id: tool
+        code: TOOL
+        name: Tool
+        applies_to: all
+        description: >
+          Least-privilege credentials, explicit permitted and prohibited action
+          sets, read-only scoping of sensitive data, transaction and velocity
+          caps, time-boxed credentials, and the absence of dangerous
+          capabilities from the tool surface.
+        controls:
+          - {id: CE.TOOL.1, name: Least-privilege credentials}
+          - {id: CE.TOOL.2, name: Permitted / prohibited action allowlists}
+          - {id: CE.TOOL.3, name: Read-only scoping of data access}
+          - {id: CE.TOOL.4, name: Per-case or per-session data scoping}
+          - {id: CE.TOOL.5, name: "Transaction caps: value, volume, velocity"}
+          - {id: CE.TOOL.6, name: Time-boxed credentials}
+          - {id: CE.TOOL.7, name: Dual control enforced at the tool}
+          - {id: CE.TOOL.8, name: Redaction / tokenisation at the boundary}
+          - {id: CE.TOOL.9, name: No-tool-available design (capability absent)}
+          - {id: CE.TOOL.10, name: Structured schemas for free-text arguments}
+
+      - id: harness
+        code: HARNESS
+        name: Harness
+        applies_to: all
+        description: >
+          Human approval gates at the action, checkpoint, or batch level;
+          immutable logging of every tool call; provenance capture preserving
+          the evidence behind a decision; interruption hooks; automatic routing
+          of high-risk work to senior review; and session budgets.
+        controls:
+          - {id: CE.HARNESS.1, name: "Approval gates: action, checkpoint, batch"}
+          - {id: CE.HARNESS.2, name: Immutable logging of every tool call}
+          - {id: CE.HARNESS.3, name: Evidence-preserving provenance capture}
+          - {id: CE.HARNESS.4, name: Mid-task interruption hooks}
+          - {id: CE.HARNESS.5, name: Auto-routing of high-risk cases to senior review}
+          - {id: CE.HARNESS.6, name: "Session budgets: steps, time, spend"}
+          - {id: CE.HARNESS.7, name: Real-time anomaly detection}
+          - {id: CE.HARNESS.8, name: Sampling-based quality review}
+          - {id: CE.HARNESS.9, name: Tested kill switch}
+          - {id: CE.HARNESS.10, name: Rate limiting across sessions}
+          - {id: CE.HARNESS.11, name: Independent second-model verification}
+
+      - id: environment
+        code: ENV
+        name: Environment
+        applies_to: all
+        description: >
+          Sandboxing and segregation from production, network egress policy,
+          hard execution boundaries, rollback on any committed change,
+          encryption, retention and access logging, and immutable run records.
+        controls:
+          - {id: CE.ENV.1, name: Sandboxing & segregation from production}
+          - {id: CE.ENV.2, name: Network egress policy}
+          - {id: CE.ENV.3, name: Hard execution boundaries}
+          - {id: CE.ENV.4, name: Rollback / snapshot on committed change}
+          - {id: CE.ENV.5, name: Shadow-mode or canary deployment}
+          - {id: CE.ENV.6, name: "Encryption at rest & in transit, retention"}
+          - {id: CE.ENV.7, name: Access logging & data-loss prevention}
+          - {id: CE.ENV.8, name: Immutable run records}
+          - {id: CE.ENV.9, name: Separate test & live credentials}
+
+      - id: inter-agent
+        code: AGENT
+        name: Inter-agent
+        applies_to: multi-agent systems only
+        description: >
+          Trust boundaries between agents, message validation, delegation
+          permissions, credential isolation, and cascade limits with caps on
+          the scope of propagated failure.
+        controls:
+          - {id: CE.AGENT.1, name: Trust boundaries between agents}
+          - {id: CE.AGENT.2, name: Message validation & signing}
+          - {id: CE.AGENT.3, name: Delegation permission schema}
+          - {id: CE.AGENT.4, name: Credential isolation & non-propagation}
+          - {id: CE.AGENT.5, name: Cascade limits}
+          - {id: CE.AGENT.6, name: Blast-radius caps}
+          - {id: CE.AGENT.7, name: Topology declaration}
+          - {id: CE.AGENT.8, name: Sub-agent spawning rules}
+
+      - id: control-plane
+        code: PLANE
+        name: Control plane
+        applies_to: platform-instantiated systems only
+        description: >
+          Registration, ownership, and versioning of agents, skills, and tools;
+          required evaluation before publication; human review of
+          agent-proposed changes; staged rollout, rollback, and deprecation;
+          and change propagation with downstream Profile invalidation.
+        controls:
+          - {id: CE.PLANE.1, name: "Registration & ownership of agents, skills, tools"}
+          - {id: CE.PLANE.2, name: Versioned change records}
+          - {id: CE.PLANE.3, name: Required evaluation before publication}
+          - {id: CE.PLANE.4, name: Human review of agent-proposed changes}
+          - {id: CE.PLANE.5, name: Staged rollout & rollback}
+          - {id: CE.PLANE.6, name: Deprecation & retirement}
+          - {id: CE.PLANE.7, name: Change propagation & downstream Profile invalidation}
+          - {id: CE.PLANE.8, name: Catalogue admission standards for tools}
+
+# -----------------------------------------------------------------------------
+# CROSS-AXIS CASE - AGENT-BUILDING PLATFORMS
+# -----------------------------------------------------------------------------
+cross_axis:
+  - id: agent-building-platforms
+    name: Agent-building platforms
+    summary: "Platform Baseline Profile + anchored Profiles"
+    context: >
+      A growing share of agents is assembled on shared platforms: substrates
+      on which domain teams build and govern their own agents through a
+      control plane. A platform is not a deployment: its ODD is open by
+      construction, tools are resolved per session rather than enumerated in
+      advance, and its agent population turns over continuously. One Profile
+      for the whole platform would be too broad to bind anything.
+    distinct_treatment_reasons:
+      - "Created far faster and modified more easily and frequently."
+      - >
+        Reachable actions are set by the control plane, so a per-agent Profile
+        alone carries little risk information.
+      - >
+        Correlated faults (a compromised catalogue entry, an over-broad
+        credential template) appear in every agent at once and in none of
+        their Profiles.
+    platform_baseline_profile: >
+      The platform carries its own Profile, whose bounded claim is a ceiling
+      on what hosted sessions can do. For every session: effective autonomy
+      cannot exceed a stated ceiling without a stated gate; out-of-set action
+      classes are unavailable in software, not by policy; no session reaches
+      data outside its authorised context; each effective envelope is
+      immutably recorded. A single counterexample falsifies it; adversarial
+      session-level testing is the falsification method. It attests
+      containment only, nothing about whether any agent's work is good.
+    platform_anchor: >
+      A hosted agent carries an ordinary Profile that also records a platform
+      anchor: the parent Platform Baseline Profile and version, incorporated by
+      reference, whose controls form part of its control envelope. Its own
+      claim is otherwise unchanged. An anchored Profile is void if the parent
+      claim is void. Because the control plane already records each
+      configuration, Level 1 anchored Profiles can be generated largely
+      automatically.
+    required_properties:
+      - {id: P1, name: "Autonomy ceiling enforced in software, with defined gating for escalation"}
+      - {id: P2, name: "Closed, versioned registry of skills and tools with admission standards"}
+      - {id: P3, name: "Per-session resolution and immutable recording of the effective envelope"}
+      - {id: P4, name: "Technically enforced data-context isolation"}
+      - {id: P5, name: "Version control over the Profile's technical components"}
+      - {id: P6, name: "Change-impact mapping, so updates invalidate only directly dependent Profiles"}
+    required_properties_note: "Each property doubles as a test target."
+    axis_touchpoints:
+      - axis: autonomy-tier
+        description: >
+          The platform records an autonomy ceiling (the maximum tier grantable
+          to any hosted agent) in place of a tier.
+      - axis: operational-design-domain
+        description: >
+          Open by construction at the platform; each hosted agent states its
+          own bounded domain.
+      - axis: action-class
+        description: >
+          Tools are resolved per session from a closed registry; stack
+          composability is stated on the Profile.
+      - axis: control-envelope
+        description: >
+          Adds the control-plane layer; substrate controls are held by
+          reference via the anchor.
+    invalidation: >
+      A material change to the substrate voids the Baseline Profile and every
+      anchored Profile; a skill update voids only the Profiles that depend on
+      it.
+    assurance_composition: >
+      Level 3 verification, obtained once for the Baseline Profile, covers the
+      substrate for every anchored agent; those can remain Level 1.
+    open_risk: >
+      Concentration: a defective platform claim undermines every anchored
+      Profile at once; adversarial testing at scale is an open problem.

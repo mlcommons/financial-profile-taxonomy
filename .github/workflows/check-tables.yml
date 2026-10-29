@@ -1,0 +1,32 @@
+name: Check Generated Tables
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - "taxonomy/examples.yaml"
+      - "taxonomy/taxonomy.yaml"
+      - "taxonomy/*.md"
+      - "taxonomy/axes/**/*.md"
+      - "README.md"
+      - "scripts/generate_tables.py"
+      - ".github/workflows/check-tables.yml"
+
+jobs:
+  check-tables:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate taxonomy and verify generated tables
+        run: |
+          python scripts/generate_tables.py --check

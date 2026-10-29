@@ -1,0 +1,80 @@
+site_name: MLCommons Agent Reliability Profile Taxonomy
+site_description: >
+  A four-axis vocabulary (autonomy tier, operational design domain, action
+  class, control envelope) for bounded, falsifiable reliability claims about
+  deployed AI agents in financial services.
+site_url: https://mlcommons.github.io/agent-reliability-profile-taxonomy/
+repo_url: https://github.com/mlcommons/agent-reliability-profile-taxonomy
+repo_name: mlcommons/agent-reliability-profile-taxonomy
+docs_dir: docs
+# docs/ is assembled from the repository Markdown by scripts/build_docs.sh.
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Taxonomy:
+      - Overview: taxonomy/taxonomy-overview.md
+      - Autonomy Tier:
+          - Axis Overview: taxonomy/axes/autonomy-tier/README.md
+          - Tiers: taxonomy/axes/autonomy-tier/tiers.md
+          - Modifiers: taxonomy/axes/autonomy-tier/modifiers.md
+      - Operational Design Domain:
+          - Axis Overview: taxonomy/axes/operational-design-domain/README.md
+          - Use Cases: taxonomy/axes/operational-design-domain/use-cases.md
+          - Multiplying Factors: taxonomy/axes/operational-design-domain/multiplying-factors.md
+      - Action Class:
+          - Axis Overview: taxonomy/axes/action-class/README.md
+          - Action Classes: taxonomy/axes/action-class/action-classes.md
+      - Control Envelope:
+          - Axis Overview: taxonomy/axes/control-envelope/README.md
+          - Model: taxonomy/axes/control-envelope/model.md
+          - Tool: taxonomy/axes/control-envelope/tool.md
+          - Harness: taxonomy/axes/control-envelope/harness.md
+          - Environment: taxonomy/axes/control-envelope/environment.md
+          - Inter-agent: taxonomy/axes/control-envelope/inter-agent.md
+          - Control Plane: taxonomy/axes/control-envelope/control-plane.md
+      - Agent-Building Platforms: taxonomy/cross-axis/agent-building-platforms.md
+  - The Profile:
+      - Profile Artifact: taxonomy/profile-artifact.md
+      - Assurance Levels: taxonomy/assurance-levels.md
+      - Worked Examples: taxonomy/examples-overview.md
+  - Reference:
+      - Crosswalk: taxonomy/crosswalk.md
+      - Glossary: taxonomy/glossary.md
+      - Datasheet: DATASHEET.md
+  - Contributing: CONTRIBUTING.md
+  - Governance:
+      - Overview: governance/maintainers.md
+      - Review Process: governance/review-process.md
+  - Taxonomy Structure Template: github/TAXONOMY_STRUCTURE_TEMPLATE.md
+  - Changelog: CHANGELOG.md
