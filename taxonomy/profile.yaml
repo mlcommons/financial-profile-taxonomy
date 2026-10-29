@@ -92,6 +92,12 @@ provenance_types:
   - {id: document-derived, name: Document-derived, description: "Extracted from a signed institutional document"}
   - {id: owner-attested, name: Owner-attested, description: "Attested by a named owner"}
   - {id: absent, name: Absent}
+comparative_grades_rule: >
+  Comparative grades appear only on Benchmarked Profiles, where the shared
+  environment, scenario policy, and scoring method support comparison across
+  deployments. Every other Profile states plainly that its results are
+  specific to its own environment.
+
 provenance_rule: >
   Conflicts are made visible. If a policy specifies read-only access but the
   deployed credential holds write permissions, the Level 1 Profile records the
@@ -104,6 +110,7 @@ floor_definition: >
   average task performance is high.
 
 assurance_levels:
+  # `limit` is what each level may NOT claim (Table 4, "what it may claim beyond that").
   ordering: "Level 1 < Level 2 < Level 3 (totally ordered)"
   levels:
     - id: L1
@@ -116,7 +123,7 @@ assurance_levels:
       what_the_profile_says: Self-reported
       minimum_bar: "Inputs attested by a named owner"
       may_claim: "This is what we believe we have deployed"
-      may_not_claim: "Nothing tested"
+      limit: "Anything tested"
       data_leaves_institution: "No"
     - id: L2
       name: Validated Profile
@@ -128,7 +135,7 @@ assurance_levels:
       what_the_profile_says: "Self-reported, self-tested"
       minimum_bar: "Reproducible generation, a content hash, signed inputs"
       may_claim: "No critical control failure under the conditions we tested"
-      may_not_claim: "No independence"
+      limit: "Independence"
       data_leaves_institution: "No"
     - id: L3
       name: Verified Profile
@@ -140,7 +147,7 @@ assurance_levels:
       what_the_profile_says: "Self-reported, independently tested"
       minimum_bar: "The Level 2 bar, plus a qualified independent assessor and its own signed report"
       may_claim: "The same, tested by someone other than us"
-      may_not_claim: "No comparability with any other system"
+      limit: "Comparability with any other system"
       data_leaves_institution: "Either the evidence travels or the assessor works on site"
 
 benchmark_comparability_flag:
@@ -154,7 +161,7 @@ benchmark_comparability_flag:
   what_the_profile_says: "In addition to its production assurance level: independently benchmarked"
   minimum_bar: "Accredited assessor, named environment version, named hidden-set version"
   may_claim: "A result comparable with other institutions under the reference conditions"
-  may_not_claim: "No additional assurance about production behavior"
+  limit: "Additional assurance about production behavior"
   data_leaves_institution: "Sometimes, depending on the benchmarking infrastructure and the benchmarked components"
   note: >
     A separate field, not an assurance level. It trades production fidelity
@@ -200,6 +207,12 @@ validity:
       name: Model or harness change that can alter tested behavior
     - id: platform-substrate-change
       name: Material change to the platform substrate (voids the Platform Baseline Profile and every anchored Profile)
+  monitoring: >
+    Post-deployment monitoring determines whether the issued conditions
+    continue to hold. The Profile surfaces the difficulty of drift detection,
+    distributed logging, and live monitoring through its monitoring plan and
+    reissuance requirements. A point-in-time evaluation is treated as exactly
+    that; residual risk between observations is acknowledged.
   change_classes:
     - {id: void, name: "Voids the Profile"}
     - {id: partial-retest, name: "Requires partial retesting"}

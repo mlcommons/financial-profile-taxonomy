@@ -34,7 +34,7 @@ A Profile is a structured claim with evidence and conditions, **not a scalar sco
 | Evidence pointers | Content hashes and stable identifiers for inputs, evaluator outputs, action traces, and assessor reports | Connects the summary to the Profile Package |
 | Status and limitations | Open findings, exceptions, risk acceptances, and interpretation limits | Preserves decision context |
 
-Organizational policies and requirements may add further components. A Profile states only the conclusions its assurance level supports.
+Organizational policies and requirements may add further components. A Profile states only the conclusions its assurance level supports. Comparative grades appear only on Benchmarked Profiles; every other Profile states plainly that its results are specific to its own environment.
 
 ## Floors
 
@@ -65,6 +65,8 @@ A Profile has a **validity interval** and a machine-readable **invalidation list
 - a changed multi-agent topology with new delegation paths
 - a model or harness change that can alter tested behavior
 - for platform-instantiated agents, a material change to the platform substrate (voids the Platform Baseline Profile and every anchored Profile)
+
+Post-deployment monitoring determines whether the issued conditions continue to hold; the Profile carries a monitoring plan and reissuance requirements, and a point-in-time evaluation is treated as exactly that.
 
 The invalidation list distinguishes changes that **void** the Profile, changes that require **partial retesting**, and changes with **no effect** on the claim.
 

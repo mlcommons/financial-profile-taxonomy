@@ -22,7 +22,9 @@
 
 ## Notes
 
-- **Data sensitivity** provides a shared scale for the [data-authority modifier](../autonomy-tier/modifiers.md) on the autonomy axis.
+*The first two notes are editorial cross-references added for this repository; they are not stated in the source documents.*
+
+- **Data sensitivity** is a candidate shared scale for the [data-authority modifier](../autonomy-tier/modifiers.md) on the autonomy axis.
 - **Cost of failure** is the domain-side counterpart to the reversibility grading on the [action-class axis](../action-class/README.md).
 - **Jurisdiction** values are coarse in v0.1.0. Jurisdiction-specific mappings (e.g., to SR 26-2) form part of the crosswalk deliverable.
 

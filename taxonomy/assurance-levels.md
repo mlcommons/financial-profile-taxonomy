@@ -16,7 +16,7 @@ Three **production assurance levels** form a single ordered scale of evidence an
 | **Minimum bar** | Inputs attested by a named owner | Reproducible generation, a content hash, signed inputs | The Level 2 bar, plus a qualified independent assessor and its own signed report | Accredited assessor, named environment version, named hidden-set version |
 | **May claim** | This is what we believe we have deployed | No critical control failure under the conditions we tested | The same, tested by someone other than us | A result comparable with other institutions under the reference conditions |
 | **May not claim** | Anything tested | Independence | Comparability with any other system | Additional assurance about production behavior |
-| **Data leaves the institution** | No | No | Either the evidence travels or the assessor works on site | Sometimes, depending on the benchmarking infrastructure |
+| **Data leaves the institution** | No | No | Either the evidence travels or the assessor works on site | Sometimes, depending on the benchmarking infrastructure and the benchmarked components |
 
 ## Mixed-Axis Assurance and the Headline Level
 

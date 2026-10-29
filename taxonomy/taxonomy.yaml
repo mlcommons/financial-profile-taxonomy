@@ -257,7 +257,8 @@ axes:
           description: >
             Who is affected (internal, customer, market, regulator,
             counterparty) and how badly.
-          scale: [internal, customer, market, regulator, counterparty]
+          affected_parties: [internal, customer, market, regulator, counterparty]
+          severity_scale: null  # not yet defined
         - id: MOD.stack-composability
           name: Stack composability
           description: >
@@ -699,7 +700,9 @@ cross_axis:
       classes are unavailable in software, not by policy; no session reaches
       data outside its authorised context; each effective envelope is
       immutably recorded. A single counterexample falsifies it; adversarial
-      session-level testing is the falsification method. It attests
+      session-level testing is the falsification method. Assurance rests on
+      the design and construction of the platform's control plane, not on
+      configuration discipline. It attests
       containment only, nothing about whether any agent's work is good.
     platform_anchor: >
       A hosted agent carries an ordinary Profile that also records a platform

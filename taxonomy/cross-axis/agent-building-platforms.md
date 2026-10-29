@@ -6,7 +6,7 @@
 
 **Artifacts:** Platform Baseline Profile + anchored Profiles.
 
-A growing share of agents is assembled on shared platforms: substrates on which domain teams build and govern their own agents through a control plane. Examples in financial services include first-party platforms connecting a single agent service to more than a thousand skills and tools, and platforms on which tens of thousands of employees build agents under a dedicated release-approval regime.
+A growing share of agents is assembled on shared platforms: substrates on which domain teams build and govern their own agents through a control plane. Examples in financial services include first-party platforms connecting a single agent service to more than a thousand skills and tools, and platforms on which some 20,000 employees build agents under a dedicated release-approval regime.
 
 **A platform is not a deployment.** Its ODD is open by construction, tools are resolved per session rather than enumerated in advance, and its agent population turns over continuously. One Profile for the whole platform would be too broad to bind anything.
 
@@ -25,7 +25,7 @@ The platform carries its own Profile, whose bounded claim is a **ceiling** on wh
 - no session reaches data outside its authorised context;
 - each effective envelope is immutably recorded.
 
-A single counterexample falsifies the claim; **adversarial session-level testing** is the falsification method. The Baseline Profile attests containment only. It says nothing about whether any agent's work is good.
+A single counterexample falsifies the claim; **adversarial session-level testing** is the falsification method. Assurance therefore rests on the design and construction of the platform's control plane, not on configuration discipline. The Baseline Profile attests containment only. It says nothing about whether any agent's work is good.
 
 ## Profile Inheritance: The Platform Anchor
 

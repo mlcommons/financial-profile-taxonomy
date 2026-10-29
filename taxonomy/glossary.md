@@ -1,5 +1,7 @@
 # Glossary
 
+Adapted from Appendix D of the preprint. Two entries are harmonized with the body of the preprint: the ODD definition includes jurisdiction (Section 4.2), and the provenance map lists all five source types (Section 5.2). Operating boundary, Unprofiled, and Modifier are added for this repository.
+
 | Term | Meaning |
 |---|---|
 | **Agent Reliability Profile** | The single artifact recording the four axis values, the floors, the out-of-scope and validity statements, the provenance map, and pointers to the underlying evidence. Each agent deployment has its own Profile. |

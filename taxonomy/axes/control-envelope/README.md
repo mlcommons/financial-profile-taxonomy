@@ -29,7 +29,7 @@ Controls are grouped by the **layer** at which they operate. Layers are tested a
 
 ## How Envelopes Are Assembled
 
-An envelope is a subset of the catalogue. In practice, controls bundle into a few standard per-layer profiles, assembled by crosswalk to OWASP, NIST, and other frameworks. The catalogue mirrors existing control frameworks rather than inventing new ones.
+An envelope is a subset of the catalogue. In practice, controls bundle into a few standard per-layer profiles, assembled by crosswalk to OWASP, NIST, and other frameworks. The catalogue mirrors existing control frameworks.
 
 Documentation alone can support a Level 1 assertion. Higher levels require evidence from inspections, evaluations, or tests. See [Assurance levels](../../assurance-levels.md).
 

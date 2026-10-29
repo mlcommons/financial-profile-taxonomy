@@ -25,6 +25,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Notes on sources
 - Lines of business follow the companion one-pager (8 groups, with insurance and treasury combined). The preprint's Section 4.2 describes 9 business lines (treasury and insurance listed separately); Appendix B of the preprint matches the one-pager.
 - The preprint's contributions list (Section 1.2) names a "Profile Verifier"; Section 6.1 describes Level 3 as the Profile Validator operated by a qualified independent assessor. This repository follows Section 6.1.
+- Modifier name: Section 4.1 says "accountability"; Appendix B.1 and the one-pager say "integrated-stack accountability". This repository uses the latter.
+- ODD definition: Section 4.2 lists jurisdiction; the Appendix D glossary lists tool surface and omits jurisdiction. The glossary here includes both.
+- Provenance types: Table 3 and Section 5.2 give five (including document-derived); the Appendix D glossary gives four. This repository uses five.
+- Platform invalidation: Section 2.5 (P6) says substrate or skill updates invalidate only directly dependent Profiles; Section 5.3 and the one-pager say a *material* substrate change voids every anchored Profile. This repository follows the one-pager; the two readings reconcile only through "material".
+- Worked examples (Appendix A): A.1 prohibits merge and deployment yet lists "human approval to merge" in the envelope; A.2 prohibits disposition yet lists "analyst approval before any disposition". Read as: the agent cannot perform these actions; a person approves them. Both examples set a one-month window although the appendix says validity is keyed to change rather than to the calendar; A.2 also omits "whichever comes first". Recorded as stated; flagged for the authors.
 
 ### References
 - Hsu, Bankhwal, Moissinac, Werbach, Szpruch, Hillenbrand, "Agent Reliability Profiles in Financial Services," preprint, September 2026
