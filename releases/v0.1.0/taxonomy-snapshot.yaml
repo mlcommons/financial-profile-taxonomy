@@ -18,16 +18,20 @@
 #
 # Hierarchy: Axis > Group > Value
 #   autonomy-tier             > tiers | modifiers         > T0..T4, U | 6 modifiers
-#   operational-design-domain > business lines            > ODD.1..ODD.52 (open set)
+#   operational-design-domain > business lines (9)        > ODD.1..ODD.52 (open set)
 #   action-class              > (single ordered scale)    > A1..A12
-#   control-envelope          > layers                    > 55 named controls
+#   control-envelope          > layers (6)                > 55 named controls
 #
-# Canonical value IDs (used by profile instances and taxonomy/examples.yaml):
+# Canonical value IDs are shared with the Agent Reliability Profile Kit
+# (spec/vocab/*.json); scripts/export_vocab.py writes them in the Kit's format.
 #   Autonomy tiers   T0, T1, T2, T3, T4, U
-#   Modifiers        MOD.<modifier-id>
-#   ODD use cases    ODD.<n>
+#   Modifiers        snake_case slug, e.g. data_authority
+#   Business lines   snake_case slug, e.g. treasury_finance
+#   ODD use cases    ODD.<n>          (extensions: ODD.x_<name>)
 #   Action classes   A<n>
-#   Controls         CE.<LAYER>.<n>   (LAYER in MODEL, TOOL, HARNESS, ENV, AGENT, PLANE)
+#   Controls         <layer>.<slug>   e.g. harness.kill_switch (candidates: <layer>.x_<slug>)
+# Labels for use cases, action classes, and controls follow the preprint
+# (Appendix B.2, Table 2, Appendix B.4); tier names follow the companion one-pager.
 #
 # This file is the single source of truth. Tables in the Markdown docs are
 # regenerated from it by scripts/generate_tables.py.
@@ -243,32 +247,33 @@ axes:
         and are material at any tier. They record risk dimensions the tier
         alone leaves unexpressed.
       values:
-        - id: MOD.data-authority
+        - id: data_authority
           name: Data authority
           description: >
             Sensitivity of what the agent may access, independent of action
             capability. Can raise the risk of a read-only deployment
             materially.
-        - id: MOD.reversibility-profile
+        - id: reversibility_profile
           name: Reversibility profile
           description: "Whether agent action can be undone without a heavy penalty."
-        - id: MOD.customer-market-impact
-          name: Customer & market impact
+        - id: customer_market_impact
+          name: Customer and market impact
           description: >
             Who is affected (internal, customer, market, regulator,
             counterparty) and how badly.
           affected_parties: [internal, customer, market, regulator, counterparty]
           severity_scale: null  # not yet defined
-        - id: MOD.stack-composability
+        - id: stack_composability
           name: Stack composability
           description: >
             Whether the tool surface is predefined in advance or dynamically
             assembled at runtime.
-          scale: [predefined, dynamically-assembled]
-        - id: MOD.integrated-stack-accountability
+          values: [predefined, dynamic]
+        - id: accountability
           name: Integrated-stack accountability
+          note: "Section 4.1 calls this modifier 'accountability'; Appendix B.1 names it in full."
           description: "Who stands behind the model, harness, and infrastructure as a whole."
-        - id: MOD.population-scope
+        - id: population_scope
           name: Population scope
           description: "Range of parties the agentic system can affect."
 
@@ -289,7 +294,8 @@ axes:
       certification. It specifies the test environment and is the
       domain-specific part of any assessment.
     splitting_rule: >
-      Use cases are grouped by line of business. Each use case multiplies by
+      Use cases are grouped by the nine lines of business named in Section 4.2
+      of the preprint. Each use case multiplies by
       the customer population it serves, the sensitivity of the data it
       touches, the cost of failure, and the jurisdiction.
     falsification: >
@@ -311,63 +317,63 @@ axes:
       the agent was given.
     business_lines:
 
-      - id: retail-consumer-banking
-        name: Retail & consumer banking
+      - id: retail_consumer_banking
+        name: Retail and consumer banking
         use_cases:
           - {id: ODD.1, name: Servicing chat}
           - {id: ODD.2, name: Complaint handling}
           - {id: ODD.3, name: Dispute resolution}
-          - {id: ODD.4, name: Account opening & onboarding}
+          - {id: ODD.4, name: Account opening and onboarding}
           - {id: ODD.5, name: Fraud alert triage}
-          - {id: ODD.6, name: Collections & hardship}
+          - {id: ODD.6, name: Collections and hardship}
           - {id: ODD.7, name: Personal financial guidance}
           - {id: ODD.8, name: Deposit operations exceptions}
 
-      - id: lending-credit
-        name: Lending & credit
+      - id: lending_credit
+        name: Lending and credit
         use_cases:
           - {id: ODD.9, name: Consumer underwriting}
           - {id: ODD.10, name: Mortgage origination}
-          - {id: ODD.11, name: Commercial underwriting & spreading}
+          - {id: ODD.11, name: Commercial underwriting and spreading}
           - {id: ODD.12, name: Credit-line management}
           - {id: ODD.13, name: Covenant monitoring}
-          - {id: ODD.14, name: Loan servicing & modifications}
-          - {id: ODD.15, name: Appraisal & collateral review}
+          - {id: ODD.14, name: Loan servicing and modifications}
+          - {id: ODD.15, name: Appraisal and collateral review}
 
       - id: payments
         name: Payments
         use_cases:
-          - {id: ODD.16, name: Payment-ops exceptions & wire repair}
+          - {id: ODD.16, name: Payment-operations exceptions and wire repair}
           - {id: ODD.17, name: Screening alert triage}
-          - {id: ODD.18, name: Chargeback & representment processing}
+          - {id: ODD.18, name: Chargeback and representment processing}
           - {id: ODD.19, name: Real-time fraud interdiction}
 
-      - id: financial-crime-compliance
-        name: Financial crime & compliance
+      - id: financial_crime_compliance
+        name: Financial crime and compliance
         use_cases:
-          - {id: ODD.20, name: "Alert triage: structuring & rapid movement"}
-          - {id: ODD.21, name: "Alert triage: trade-based laundering, terrorist financing, sanctions evasion, shell structures"}
-          - {id: ODD.22, name: Periodic customer review & enhanced diligence}
-          - {id: ODD.23, name: Narrative drafting & QA}
+          - {id: ODD.20, name: Alert triage for structuring and rapid movement}
+          - {id: ODD.21, name: "Alert triage for trade-based laundering, terrorist financing, sanctions evasion, and shell structures"}
+          - {id: ODD.22, name: Periodic customer review and enhanced diligence}
+          - {id: ODD.23, name: Narrative drafting and quality assurance}
           - {id: ODD.24, name: Monitoring-rule tuning}
           - {id: ODD.25, name: Trade surveillance}
           - {id: ODD.26, name: Communications surveillance}
           - {id: ODD.27, name: Regulatory-change monitoring}
-          - {id: ODD.28, name: Marketing & conduct review}
+          - {id: ODD.28, name: Marketing and conduct review}
           - {id: ODD.29, name: Conflicts monitoring}
 
       - id: markets
-        name: Markets
+        name: Markets and capital markets
         use_cases:
           - {id: ODD.30, name: Research generation}
-          - {id: ODD.31, name: Execution & algorithm selection}
-          - {id: ODD.32, name: Post-trade reconciliation & settlement exceptions}
+          - {id: ODD.31, name: Execution and algorithm selection}
+          - {id: ODD.32, name: Post-trade reconciliation and settlement exceptions}
           - {id: ODD.33, name: Corporate actions}
           - {id: ODD.34, name: Margin calls}
           - {id: ODD.35, name: Institutional onboarding}
 
-      - id: wealth-asset-management
-        name: Wealth & asset management
+      - id: wealth_asset_management
+        name: Wealth and asset management
         use_cases:
           - {id: ODD.36, name: Portfolio rebalancing}
           - {id: ODD.37, name: Proposal generation}
@@ -375,24 +381,28 @@ axes:
           - {id: ODD.39, name: Client reporting}
           - {id: ODD.40, name: Tax-loss harvesting}
 
-      - id: insurance-treasury
-        name: Insurance & treasury
+      - id: treasury_finance
+        name: Treasury and finance
         use_cases:
-          - {id: ODD.41, name: Claims triage & adjudication}
-          - {id: ODD.42, name: Underwriting}
           - {id: ODD.43, name: Liquidity forecasting}
-          - {id: ODD.44, name: Financial close & reconciliation}
+          - {id: ODD.44, name: Financial close and reconciliation}
           - {id: ODD.45, name: Regulatory reporting preparation}
 
-      - id: internal-functions
-        name: Internal functions
+      - id: insurance
+        name: Insurance
+        use_cases:
+          - {id: ODD.41, name: Claims triage and adjudication}
+          - {id: ODD.42, name: Underwriting}
+
+      - id: internal_corporate
+        name: Internal / corporate functions
         use_cases:
           - {id: ODD.46, name: Software development}
-          - {id: ODD.47, name: IT operations & incident response}
+          - {id: ODD.47, name: IT operations and incident response}
           - {id: ODD.48, name: Security operations triage}
           - {id: ODD.49, name: Model validation support}
           - {id: ODD.50, name: Internal audit support}
-          - {id: ODD.51, name: Procurement & third-party review}
+          - {id: ODD.51, name: Procurement and third-party review}
           - {id: ODD.52, name: Employee services}
 
     multiplying_factors:
@@ -470,6 +480,7 @@ axes:
         name: Read / retrieve
         examples: [Query transactions, Read case files, Search policy]
         reversibility: "n/a"
+        reversibility_code: n/a
         note: >
           Ignores the risk of data leakage or theft from cyber
           vulnerabilities, which is out of scope for the Profile. The
@@ -479,46 +490,57 @@ axes:
         name: Analyse / compute
         examples: [Score, Simulate, Reconcile in memory]
         reversibility: "n/a"
+        reversibility_code: n/a
       - id: A3
         name: Draft for a person
         examples: [Narratives, Code, Emails, Memos, Draft filings]
         reversibility: Fully reversible
+        reversibility_code: fully_reversible
       - id: A4
         name: Recommend / route
         examples: [Disposition recommendations, Escalations, Prioritisation]
         reversibility: Fully reversible
+        reversibility_code: fully_reversible
       - id: A5
         name: Write internal
         examples: [Case notes, Tickets, Opening a pull request, CRM updates]
         reversibility: Reversible
+        reversibility_code: reversible
       - id: A6
         name: Submit / commit internal
         examples: [Merge code, Close a case]
         reversibility: Semi-reversible
+        reversibility_code: semi_reversible
       - id: A7
         name: External communication
         examples: [Notify a customer, Contact a third party, Publish]
         reversibility: Hard to reverse
+        reversibility_code: hard_to_reverse
       - id: A8
-        name: Transact (bounded)
+        name: Transact, bounded
         examples: [Place a hold, Block a card, Trade within a cancel window]
         reversibility: Partially reversible
+        reversibility_code: partially_reversible
       - id: A9
         name: Move funds
         examples: [Wire release, Payment execution, Settlement]
         reversibility: Irreversible
+        reversibility_code: irreversible
       - id: A10
         name: Regulatory filing
         examples: [File a suspicious-activity or currency report, Submit returns, Attest]
         reversibility: Irreversible, with legal effect
+        reversibility_code: irreversible_legal_effect
       - id: A11
-        name: Access & infrastructure change
+        name: Access and infrastructure change
         examples: [Alter permissions, Deploy to production, Change branch protection]
         reversibility: Irreversible and risk-amplifying
+        reversibility_code: irreversible_amplifying
       - id: A12
         name: Delegate / spawn
         examples: [Create sub-agents, Grant credentials to another agent]
         reversibility: Amplifying
+        reversibility_code: amplifying
 
   # ---------------------------------------------------------------------------
   # AXIS 4 - CONTROL ENVELOPE
@@ -553,7 +575,7 @@ axes:
     layers:
 
       - id: model
-        code: MODEL
+        page: model
         name: Model
         applies_to: all
         description: >
@@ -561,18 +583,18 @@ axes:
           anything, surfaces uncertainty, flags irreversible operations,
           grounds claims in retrieved evidence, and refuses out-of-scope work.
         controls:
-          - {id: CE.MODEL.1, name: Structured plan review before execution}
-          - {id: CE.MODEL.2, name: Uncertainty surfacing & confidence thresholds}
-          - {id: CE.MODEL.3, name: Irreversible-action flagging}
-          - {id: CE.MODEL.4, name: Evidence grounding (cite or refuse)}
-          - {id: CE.MODEL.5, name: Out-of-scope flagging}
-          - {id: CE.MODEL.6, name: Refusal policies for prohibited requests}
-          - {id: CE.MODEL.7, name: Self-verification pass before output}
-          - {id: CE.MODEL.8, name: System-prompt hardening}
-          - {id: CE.MODEL.9, name: Constraints on customer-facing tone & claims}
+          - {id: model.structured_plan_review, name: "Structured plan review before execution"}
+          - {id: model.uncertainty_surfacing, name: "Uncertainty surfacing and confidence thresholds"}
+          - {id: model.irreversible_action_flagging, name: "Irreversible-action flagging"}
+          - {id: model.evidence_grounding, name: "Evidence grounding (cite or refuse)"}
+          - {id: model.out_of_scope_flagging, name: "Out-of-scope flagging"}
+          - {id: model.refusal_policies, name: "Refusal policies for prohibited requests"}
+          - {id: model.self_verification, name: "Self-verification pass before output"}
+          - {id: model.system_prompt_hardening, name: "System-prompt hardening"}
+          - {id: model.customer_facing_constraints, name: "Constraints on customer-facing tone and claims"}
 
       - id: tool
-        code: TOOL
+        page: tool
         name: Tool
         applies_to: all
         description: >
@@ -581,19 +603,19 @@ axes:
           caps, time-boxed credentials, and the absence of dangerous
           capabilities from the tool surface.
         controls:
-          - {id: CE.TOOL.1, name: Least-privilege credentials}
-          - {id: CE.TOOL.2, name: Permitted / prohibited action allowlists}
-          - {id: CE.TOOL.3, name: Read-only scoping of data access}
-          - {id: CE.TOOL.4, name: Per-case or per-session data scoping}
-          - {id: CE.TOOL.5, name: "Transaction caps: value, volume, velocity"}
-          - {id: CE.TOOL.6, name: Time-boxed credentials}
-          - {id: CE.TOOL.7, name: Dual control enforced at the tool}
-          - {id: CE.TOOL.8, name: Redaction / tokenisation at the boundary}
-          - {id: CE.TOOL.9, name: No-tool-available design (capability absent)}
-          - {id: CE.TOOL.10, name: Structured schemas for free-text arguments}
+          - {id: tool.least_privilege_credentials, name: "Least-privilege credentials"}
+          - {id: tool.action_allowlists, name: "Permitted and prohibited action allowlists"}
+          - {id: tool.read_only_data_scoping, name: "Read-only scoping of data access"}
+          - {id: tool.per_case_data_scoping, name: "Per-case or per-session data scoping"}
+          - {id: tool.transaction_caps, name: "Transaction caps by value, volume, and velocity"}
+          - {id: tool.time_boxed_credentials, name: "Time-boxed credentials"}
+          - {id: tool.dual_control, name: "Dual control enforced at the tool"}
+          - {id: tool.redaction_tokenisation, name: "Redaction or tokenisation at the boundary"}
+          - {id: tool.no_tool_available, name: "No-tool-available design"}
+          - {id: tool.structured_argument_schemas, name: "Structured schemas constraining free-text arguments"}
 
       - id: harness
-        code: HARNESS
+        page: harness
         name: Harness
         applies_to: all
         description: >
@@ -602,20 +624,20 @@ axes:
           the evidence behind a decision; interruption hooks; automatic routing
           of high-risk work to senior review; and session budgets.
         controls:
-          - {id: CE.HARNESS.1, name: "Approval gates: action, checkpoint, batch"}
-          - {id: CE.HARNESS.2, name: Immutable logging of every tool call}
-          - {id: CE.HARNESS.3, name: Evidence-preserving provenance capture}
-          - {id: CE.HARNESS.4, name: Mid-task interruption hooks}
-          - {id: CE.HARNESS.5, name: Auto-routing of high-risk cases to senior review}
-          - {id: CE.HARNESS.6, name: "Session budgets: steps, time, spend"}
-          - {id: CE.HARNESS.7, name: Real-time anomaly detection}
-          - {id: CE.HARNESS.8, name: Sampling-based quality review}
-          - {id: CE.HARNESS.9, name: Tested kill switch}
-          - {id: CE.HARNESS.10, name: Rate limiting across sessions}
-          - {id: CE.HARNESS.11, name: Independent second-model verification}
+          - {id: harness.human_approval_gates, name: "Human approval gates by action, checkpoint, or batch"}
+          - {id: harness.immutable_tool_call_logging, name: "Immutable logging of every tool call"}
+          - {id: harness.provenance_capture, name: "Evidence-preserving provenance capture"}
+          - {id: harness.interruption_hooks, name: "Mid-task interruption hooks"}
+          - {id: harness.high_risk_routing, name: "Automatic routing of high-risk cases to senior review"}
+          - {id: harness.session_budgets, name: "Session budgets in steps, time, and spend"}
+          - {id: harness.anomaly_detection, name: "Real-time anomaly detection on agent behaviour"}
+          - {id: harness.sampled_quality_review, name: "Sampling-based quality review of outputs"}
+          - {id: harness.kill_switch, name: "A tested kill switch"}
+          - {id: harness.rate_limiting, name: "Rate limiting across sessions"}
+          - {id: harness.second_model_verification, name: "Independent second-model verification"}
 
       - id: environment
-        code: ENV
+        page: environment
         name: Environment
         applies_to: all
         description: >
@@ -623,18 +645,18 @@ axes:
           hard execution boundaries, rollback on any committed change,
           encryption, retention and access logging, and immutable run records.
         controls:
-          - {id: CE.ENV.1, name: Sandboxing & segregation from production}
-          - {id: CE.ENV.2, name: Network egress policy}
-          - {id: CE.ENV.3, name: Hard execution boundaries}
-          - {id: CE.ENV.4, name: Rollback / snapshot on committed change}
-          - {id: CE.ENV.5, name: Shadow-mode or canary deployment}
-          - {id: CE.ENV.6, name: "Encryption at rest & in transit, retention"}
-          - {id: CE.ENV.7, name: Access logging & data-loss prevention}
-          - {id: CE.ENV.8, name: Immutable run records}
-          - {id: CE.ENV.9, name: Separate test & live credentials}
+          - {id: environment.sandboxing, name: "Sandboxing and segregation from production"}
+          - {id: environment.network_egress_policy, name: "Network egress policy"}
+          - {id: environment.hard_execution_boundaries, name: "Hard execution boundaries"}
+          - {id: environment.rollback_snapshot, name: "Rollback or snapshot on any committed change"}
+          - {id: environment.shadow_canary, name: "Shadow-mode or canary deployment"}
+          - {id: environment.encryption_retention, name: "Encryption at rest and in transit with retention controls"}
+          - {id: environment.access_logging_dlp, name: "Access logging and data-loss prevention"}
+          - {id: environment.immutable_run_records, name: "Immutable run records"}
+          - {id: environment.credential_separation, name: "Separation of test and live credentials"}
 
-      - id: inter-agent
-        code: AGENT
+      - id: inter_agent
+        page: inter-agent
         name: Inter-agent
         applies_to: multi-agent systems only
         description: >
@@ -642,17 +664,17 @@ axes:
           permissions, credential isolation, and cascade limits with caps on
           the scope of propagated failure.
         controls:
-          - {id: CE.AGENT.1, name: Trust boundaries between agents}
-          - {id: CE.AGENT.2, name: Message validation & signing}
-          - {id: CE.AGENT.3, name: Delegation permission schema}
-          - {id: CE.AGENT.4, name: Credential isolation & non-propagation}
-          - {id: CE.AGENT.5, name: Cascade limits}
-          - {id: CE.AGENT.6, name: Blast-radius caps}
-          - {id: CE.AGENT.7, name: Topology declaration}
-          - {id: CE.AGENT.8, name: Sub-agent spawning rules}
+          - {id: inter_agent.trust_boundaries, name: "Trust boundaries between agents"}
+          - {id: inter_agent.message_validation, name: "Message validation and signing"}
+          - {id: inter_agent.delegation_schema, name: "A delegation permission schema"}
+          - {id: inter_agent.credential_isolation, name: "Credential isolation and non-propagation"}
+          - {id: inter_agent.cascade_limits, name: "Cascade limits"}
+          - {id: inter_agent.blast_radius_caps, name: "Blast-radius caps"}
+          - {id: inter_agent.topology_declaration, name: "Topology declaration"}
+          - {id: inter_agent.spawning_rules, name: "Sub-agent spawning rules"}
 
-      - id: control-plane
-        code: PLANE
+      - id: control_plane
+        page: control-plane
         name: Control plane
         applies_to: platform-instantiated systems only
         description: >
@@ -661,14 +683,14 @@ axes:
           agent-proposed changes; staged rollout, rollback, and deprecation;
           and change propagation with downstream Profile invalidation.
         controls:
-          - {id: CE.PLANE.1, name: "Registration & ownership of agents, skills, tools"}
-          - {id: CE.PLANE.2, name: Versioned change records}
-          - {id: CE.PLANE.3, name: Required evaluation before publication}
-          - {id: CE.PLANE.4, name: Human review of agent-proposed changes}
-          - {id: CE.PLANE.5, name: Staged rollout & rollback}
-          - {id: CE.PLANE.6, name: Deprecation & retirement}
-          - {id: CE.PLANE.7, name: Change propagation & downstream Profile invalidation}
-          - {id: CE.PLANE.8, name: Catalogue admission standards for tools}
+          - {id: control_plane.registration_ownership, name: "Registration and ownership of agents, skills, and tools"}
+          - {id: control_plane.change_records, name: "Versioned change records"}
+          - {id: control_plane.pre_publication_evaluation, name: "Required evaluation before publication"}
+          - {id: control_plane.human_review_of_agent_changes, name: "Human review of agent-proposed changes"}
+          - {id: control_plane.staged_rollout, name: "Staged rollout and rollback"}
+          - {id: control_plane.deprecation_retirement, name: "Deprecation and retirement"}
+          - {id: control_plane.change_propagation, name: "Change propagation and downstream Profile invalidation"}
+          - {id: control_plane.tool_admission_standards, name: "Catalogue admission standards for tools"}
 
 # -----------------------------------------------------------------------------
 # CROSS-AXIS CASE - AGENT-BUILDING PLATFORMS

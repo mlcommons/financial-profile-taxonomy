@@ -12,14 +12,15 @@ labels: ["use-case", "triage"]
 
 <!-- Which existing line of business does it belong to? If none fits, argue for a new one. -->
 
-- [ ] Retail & consumer banking
-- [ ] Lending & credit
+- [ ] Retail and consumer banking
+- [ ] Lending and credit
 - [ ] Payments
-- [ ] Financial crime & compliance
-- [ ] Markets
-- [ ] Wealth & asset management
-- [ ] Insurance & treasury
-- [ ] Internal functions
+- [ ] Financial crime and compliance
+- [ ] Markets and capital markets
+- [ ] Wealth and asset management
+- [ ] Treasury and finance
+- [ ] Insurance
+- [ ] Internal / corporate functions
 - [ ] New line of business (explain below)
 
 ## Description

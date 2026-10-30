@@ -52,7 +52,7 @@
 
 **Reversibility:** Hard to reverse.
 
-## A8 · Transact (bounded)
+## A8 · Transact, bounded
 
 **Examples:** Place a hold, block a card, trade within a cancel window.
 
@@ -70,7 +70,7 @@
 
 **Reversibility:** Irreversible, with legal effect.
 
-## A11 · Access & infrastructure change
+## A11 · Access and infrastructure change
 
 **Examples:** Alter permissions, deploy to production, change branch protection.
 

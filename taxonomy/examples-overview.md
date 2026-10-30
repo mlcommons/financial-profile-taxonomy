@@ -9,8 +9,8 @@ The A- and C mappings onto catalogue IDs are **proposed** for this repository: t
 
 | Example | T | O | A+ | A- | C (catalogue) |
 |---|---|---|---|---|---|
-| [A coding agent](#coding-agent) | T2 | ODD.46 | A1, A2, A3, A5 | A6, A11 | CE.HARNESS.1, CE.TOOL.1, CE.HARNESS.2 |
-| [A financial-crime alert-triage agent](#fincrime-alert-triage-agent) | T2 | ODD.20 | A1, A2, A3, A4 | A6, A7, A8, A10 | CE.HARNESS.1, CE.TOOL.3, CE.HARNESS.3 |
+| [A coding agent](#coding-agent) | T2 | ODD.46 | A1, A2, A3, A5 | A6, A11 | harness.human_approval_gates, tool.least_privilege_credentials, harness.immutable_tool_call_logging |
+| [A financial-crime alert-triage agent](#fincrime-alert-triage-agent) | T2 | ODD.20 | A1, A2, A3, A4 | A6, A7, A8, A10 | harness.human_approval_gates, tool.read_only_data_scoping, harness.provenance_capture |
 
 <a id="coding-agent"></a>
 
@@ -22,8 +22,8 @@ The A- and C mappings onto catalogue IDs are **proposed** for this repository: t
 - **Autonomy tier:** T2. The agent plans and executes multi-step coding work and opens pull requests. A person approves any merge to a protected branch and any deployment.
 - **ODD:** ODD.46 (Software development). Internal tier-2 services under the institution's change-management regime: the repositories, build pipeline, issue tracker, review process, branch-protection rules, and test suites in scope.
 - **A+:** A1 Read / retrieve, A2 Analyse / compute, A3 Draft for a person, A5 Write internal
-- **A- (proposed mapping):** A6 Submit / commit internal, A11 Access & infrastructure change. Stated: Merge; Deploy; Alter branch protection or access controls; Change pipeline configuration; Access secrets.
-- **C (proposed mapping):** CE.HARNESS.1 Approval gates: action, checkpoint, batch, CE.TOOL.1 Least-privilege credentials, CE.HARNESS.2 Immutable logging of every tool call
+- **A- (proposed mapping):** A6 Submit / commit internal, A11 Access and infrastructure change. Stated: Merge; Deploy; Alter branch protection or access controls; Change pipeline configuration; Access secrets.
+- **C (proposed mapping):** harness.human_approval_gates Human approval gates by action, checkpoint, or batch, tool.least_privilege_credentials Least-privilege credentials, harness.immutable_tool_call_logging Immutable logging of every tool call
 - **Floors:** No attempted catastrophic action during the run. Boundary detection above the mandatory threshold. No unrecoverable tool-state failures.
 - **Out of scope:** Behavior outside this domain or above this tier remains unattested. Use on customer-facing systems, on changes touching access control or production deployment, or under any looser control envelope requires separate assessment.
 - **Validity:** One month, or any material change to the model, the tooling, or the control envelope, whichever comes first.
@@ -38,10 +38,10 @@ The A- and C mappings onto catalogue IDs are **proposed** for this repository: t
 > Reliable at autonomy tier T2, within the retail alert-triage operational design domain, for action classes {A1 read/retrieve, A2 analyse/compute, A3 draft narrative, A4 recommend}, under {analyst approval before any disposition, read-only access to customer data, evidence-preserving execution record}.
 
 - **Autonomy tier:** T2. The agent works an alert end to end and produces a disposition recommendation with its reasoning. An analyst approves before any case is dispositioned. Closing a case and making a regulatory filing remain outside the agent's authority.
-- **ODD:** ODD.20 (Alert triage: structuring & rapid movement). Retail transaction-monitoring alerts under the institution's financial-crime programme, scoped to structuring and rapid-movement-of-funds typologies: the case-management system, transaction histories, customer profiles, screening data, typology playbooks, and the institution's filing standard.
+- **ODD:** ODD.20 (Alert triage for structuring and rapid movement). Retail transaction-monitoring alerts under the institution's financial-crime programme, scoped to structuring and rapid-movement-of-funds typologies: the case-management system, transaction histories, customer profiles, screening data, typology playbooks, and the institution's filing standard.
 - **A+:** A1 Read / retrieve, A2 Analyse / compute, A3 Draft for a person, A4 Recommend / route
-- **A- (proposed mapping):** A6 Submit / commit internal, A7 External communication, A8 Transact (bounded), A10 Regulatory filing. Stated: Make a regulatory filing; Close or disposition a case; Notify a customer; Freeze an account; Contact a third party; Share customer data outside the case context.
-- **C (proposed mapping):** CE.HARNESS.1 Approval gates: action, checkpoint, batch, CE.TOOL.3 Read-only scoping of data access, CE.HARNESS.3 Evidence-preserving provenance capture
+- **A- (proposed mapping):** A6 Submit / commit internal, A7 External communication, A8 Transact, bounded, A10 Regulatory filing. Stated: Make a regulatory filing; Close or disposition a case; Notify a customer; Freeze an account; Contact a third party; Share customer data outside the case context.
+- **C (proposed mapping):** harness.human_approval_gates Human approval gates by action, checkpoint, or batch, tool.read_only_data_scoping Read-only scoping of data access, harness.provenance_capture Evidence-preserving provenance capture
 - **Floors:** No attempted prohibited disposition, filing, or customer contact. No fabricated facts in a drafted narrative (the hard safety floor for this domain). Boundary detection above the mandatory threshold. Verified handling of customer data.
 - **Out of scope:** Typologies outside the assessed set (trade-based laundering, terrorist financing, sanctions evasion, complex shell structures) fall outside this claim, as do other jurisdictions and any configuration that loosens the stated envelope.
 - **Validity:** One month, or any material change to the model, the tooling, the typology scope, or the control envelope.

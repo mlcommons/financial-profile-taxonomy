@@ -12,6 +12,8 @@ on:
       - "taxonomy/axes/**/*.md"
       - "README.md"
       - "scripts/generate_tables.py"
+      - "scripts/export_vocab.py"
+      - "vocab/**"
       - ".github/workflows/check-tables.yml"
 
 jobs:
@@ -30,3 +32,4 @@ jobs:
       - name: Validate taxonomy and verify generated tables
         run: |
           python scripts/generate_tables.py --check
+          python scripts/export_vocab.py --check

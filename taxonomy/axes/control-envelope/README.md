@@ -17,12 +17,12 @@ Controls are grouped by the **layer** at which they operate. Layers are tested a
 
 | Layer | Controls | Applies to | ID pattern |
 |---|---|---|---|
-| [Model](model.md) | 9 | All deployments | `CE.MODEL.n` |
-| [Tool](tool.md) | 10 | All deployments | `CE.TOOL.n` |
-| [Harness](harness.md) | 11 | All deployments | `CE.HARNESS.n` |
-| [Environment](environment.md) | 9 | All deployments | `CE.ENV.n` |
-| [Inter-agent](inter-agent.md) | 8 | Multi-agent systems only | `CE.AGENT.n` |
-| [Control plane](control-plane.md) | 8 | Platform-instantiated systems only | `CE.PLANE.n` |
+| [Model](model.md) | 9 | All deployments | `model.<slug>` |
+| [Tool](tool.md) | 10 | All deployments | `tool.<slug>` |
+| [Harness](harness.md) | 11 | All deployments | `harness.<slug>` |
+| [Environment](environment.md) | 9 | All deployments | `environment.<slug>` |
+| [Inter-agent](inter-agent.md) | 8 | Multi-agent systems only | `inter_agent.<slug>` |
+| [Control plane](control-plane.md) | 8 | Platform-instantiated systems only | `control_plane.<slug>` |
 | **Total** | **55** |  |  |
 
 <!-- END GENERATED: layer-summary -->
@@ -43,7 +43,7 @@ An envelope claim fails if a named control is documented but absent from the run
 
 ## Open Work
 
-The v0.1.0 catalogue fixes control **names and IDs**. Per-control definitions, configuration parameters, evidence expectations by assurance level, and mappings to OWASP and NIST controls are open contributions; see [CONTRIBUTING.md](../../../CONTRIBUTING.md#4-control-submission).
+The v0.1.0 catalogue fixes control **labels** (from Appendix B.4 of the preprint) and **IDs** (`<layer>.<slug>`, shared with the Profile Kit). Per-control definitions, configuration parameters, evidence expectations by assurance level, and mappings to OWASP and NIST controls are open contributions; see [CONTRIBUTING.md](../../../CONTRIBUTING.md#4-control-submission).
 
 ## See Also
 

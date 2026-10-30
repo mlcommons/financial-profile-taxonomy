@@ -33,21 +33,22 @@ Agent Reliability Profile: operating boundary  S(D) = (T, O, A+, A-, C)
 │   └── Cross-cutting modifiers
 │       ├── Data authority
 │       ├── Reversibility profile
-│       ├── Customer & market impact
+│       ├── Customer and market impact
 │       ├── Stack composability
 │       ├── Integrated-stack accountability
 │       └── Population scope
 │
 ├── Axis 2 · O · Operational Design Domain (ODD)  (open set)
 │   ├── Use cases by line of business
-│   │   ├── Retail & consumer banking (8)  ODD.1–8
-│   │   ├── Lending & credit (7)  ODD.9–15
+│   │   ├── Retail and consumer banking (8)  ODD.1–8
+│   │   ├── Lending and credit (7)  ODD.9–15
 │   │   ├── Payments (4)  ODD.16–19
-│   │   ├── Financial crime & compliance (10)  ODD.20–29
-│   │   ├── Markets (6)  ODD.30–35
-│   │   ├── Wealth & asset management (5)  ODD.36–40
-│   │   ├── Insurance & treasury (5)  ODD.41–45
-│   │   └── Internal functions (7)  ODD.46–52
+│   │   ├── Financial crime and compliance (10)  ODD.20–29
+│   │   ├── Markets and capital markets (6)  ODD.30–35
+│   │   ├── Wealth and asset management (5)  ODD.36–40
+│   │   ├── Treasury and finance (3)  ODD.43–45
+│   │   ├── Insurance (2)  ODD.41–42
+│   │   └── Internal / corporate functions (7)  ODD.46–52
 │   └── Multiplying factors
 │       ├── Customer population (×9)
 │       ├── Data sensitivity (×6)
@@ -62,10 +63,10 @@ Agent Reliability Profile: operating boundary  S(D) = (T, O, A+, A-, C)
 │   ├── A5   Write internal                   Reversible
 │   ├── A6   Submit / commit internal         Semi-reversible
 │   ├── A7   External communication           Hard to reverse
-│   ├── A8   Transact (bounded)               Partially reversible
+│   ├── A8   Transact, bounded                Partially reversible
 │   ├── A9   Move funds                       Irreversible
 │   ├── A10  Regulatory filing                Irreversible, with legal effect
-│   ├── A11  Access & infrastructure change   Irreversible and risk-amplifying
+│   ├── A11  Access and infrastructure change Irreversible and risk-amplifying
 │   └── A12  Delegate / spawn                 Amplifying
 │
 └── Axis 4 · C · Control Envelope

@@ -1,0 +1,28 @@
+{
+  "vocabulary": "arp-taxonomy/0.1.0/business-lines",
+  "version": "0.1.0",
+  "source": "mlcommons/agent-reliability-profile-taxonomy, taxonomy/taxonomy.yaml (generated)",
+  "note": "The ODD is an open set; only its schema and top-level business lines are standardised.",
+  "terms": [
+    "retail_consumer_banking",
+    "lending_credit",
+    "payments",
+    "financial_crime_compliance",
+    "markets",
+    "wealth_asset_management",
+    "treasury_finance",
+    "insurance",
+    "internal_corporate"
+  ],
+  "labels": {
+    "retail_consumer_banking": "Retail and consumer banking",
+    "lending_credit": "Lending and credit",
+    "payments": "Payments",
+    "financial_crime_compliance": "Financial crime and compliance",
+    "markets": "Markets and capital markets",
+    "wealth_asset_management": "Wealth and asset management",
+    "treasury_finance": "Treasury and finance",
+    "insurance": "Insurance",
+    "internal_corporate": "Internal / corporate functions"
+  }
+}

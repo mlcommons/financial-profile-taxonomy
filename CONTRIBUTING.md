@@ -59,8 +59,9 @@ Structural changes include: a new or redefined autonomy tier; a new, split, merg
 
 ```bash
 pip install pyyaml
-python scripts/generate_tables.py          # validate and regenerate
-python scripts/generate_tables.py --check  # what CI runs
+python scripts/generate_tables.py          # validate and regenerate Markdown tables
+python scripts/export_vocab.py             # regenerate vocab/ (Profile Kit format)
+python scripts/generate_tables.py --check && python scripts/export_vocab.py --check   # what CI runs
 ```
 
 The script validates that IDs are unique and contiguous, that counts match the expected option universe, and that every ID used in an example exists. **IDs are stable**: once published, a use case, class, or control ID is never renumbered or reused. Retired values are marked deprecated in a future version rather than deleted. If you change the size of an axis, update `EXPECTED` in the script in the same pull request.

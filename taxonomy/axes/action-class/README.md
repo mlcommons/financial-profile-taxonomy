@@ -24,10 +24,10 @@ The organizing variable is **reversibility**, graded with consequence. Twelve cl
 | **A5** | Write internal | Case notes, Tickets, Opening a pull request, CRM updates | Reversible |
 | **A6** | Submit / commit internal | Merge code, Close a case | Semi-reversible |
 | **A7** | External communication | Notify a customer, Contact a third party, Publish | Hard to reverse |
-| **A8** | Transact (bounded) | Place a hold, Block a card, Trade within a cancel window | Partially reversible |
+| **A8** | Transact, bounded | Place a hold, Block a card, Trade within a cancel window | Partially reversible |
 | **A9** | Move funds | Wire release, Payment execution, Settlement | Irreversible |
 | **A10** | Regulatory filing | File a suspicious-activity or currency report, Submit returns, Attest | Irreversible, with legal effect |
-| **A11** | Access & infrastructure change | Alter permissions, Deploy to production, Change branch protection | Irreversible and risk-amplifying |
+| **A11** | Access and infrastructure change | Alter permissions, Deploy to production, Change branch protection | Irreversible and risk-amplifying |
 | **A12** | Delegate / spawn | Create sub-agents, Grant credentials to another agent | Amplifying |
 
 <!-- END GENERATED: action-class-table -->

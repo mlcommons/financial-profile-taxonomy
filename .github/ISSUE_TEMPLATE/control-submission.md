@@ -7,7 +7,7 @@ labels: ["control", "triage"]
 ## Submission Type
 
 - [ ] New control
-- [ ] Definition / evidence expectations for an existing control (give its ID, e.g., `CE.HARNESS.9`)
+- [ ] Definition / evidence expectations for an existing control (give its ID, e.g., `harness.kill_switch`)
 - [ ] Crosswalk mapping (OWASP, NIST, CRI, jurisdiction-specific)
 
 ## Control Name or ID

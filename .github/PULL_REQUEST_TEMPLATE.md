@@ -24,7 +24,7 @@ Link to supporting deployments, supervisory experience, frameworks, or discussio
 
 ## Checklist
 
-- [ ] `python scripts/generate_tables.py --check` passes
+- [ ] `python scripts/generate_tables.py --check` and `python scripts/export_vocab.py --check` pass
 - [ ] No existing canonical IDs were renumbered or reused
 - [ ] No confidential institutional configuration, customer data, or credentials included
 - [ ] I have reviewed existing entries to avoid duplicates

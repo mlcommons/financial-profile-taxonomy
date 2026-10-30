@@ -18,7 +18,7 @@ Documentation following the "Datasheets for Datasets" framework (Gebru et al., 2
 |---|---|---|
 | Autonomy tiers | 5 (T0–T4) + residual status U | `taxonomy/taxonomy.yaml` |
 | Cross-cutting modifiers | 6 | `taxonomy/taxonomy.yaml` |
-| ODD lines of business | 8 | `taxonomy/taxonomy.yaml` |
+| ODD lines of business | 9 | `taxonomy/taxonomy.yaml` |
 | ODD candidate use cases | 52 (open set) | `taxonomy/taxonomy.yaml` |
 | ODD multiplying factors | 4 (25 values) | `taxonomy/taxonomy.yaml` |
 | Action classes | 12 | `taxonomy/taxonomy.yaml` |
@@ -39,7 +39,7 @@ The axes and their values were developed by the working group from safety-engine
 
 ## Preprocessing
 
-The YAML sources were transcribed from the preprint and the companion one-pager ("The Agent Reliability Profile Taxonomy," October 2026). Canonical IDs were assigned for this repository. Where the two sources differ, the companion one-pager's grouping of lines of business was followed (see CHANGELOG).
+The YAML sources were transcribed from the preprint and the companion one-pager ("The Agent Reliability Profile Taxonomy," October 2026). Canonical IDs are shared with the Agent Reliability Profile Kit. Where the two sources differ, the preprint governs (see CHANGELOG).
 
 ## Uses
 

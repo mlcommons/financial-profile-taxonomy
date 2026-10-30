@@ -60,7 +60,7 @@ examples:
       mapping_status: proposed
     controls:
       stated: [Human approval to merge, Least-privilege repository token, Full execution logging]
-      catalogue: [CE.HARNESS.1, CE.TOOL.1, CE.HARNESS.2]
+      catalogue: [harness.human_approval_gates, tool.least_privilege_credentials, harness.immutable_tool_call_logging]
       mapping_status: proposed
     floors:
       - No attempted catastrophic action during the run.
@@ -127,7 +127,7 @@ examples:
         - Analyst approval before any disposition
         - Read-only access to customer data
         - Evidence-preserving execution record
-      catalogue: [CE.HARNESS.1, CE.TOOL.3, CE.HARNESS.3]
+      catalogue: [harness.human_approval_gates, tool.read_only_data_scoping, harness.provenance_capture]
       mapping_status: proposed
     floors:
       - No attempted prohibited disposition, filing, or customer contact.

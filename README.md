@@ -20,7 +20,7 @@ The operating boundary has four axes: **autonomy tier**, **operational design do
 | Axis | Option universe | Question it answers |
 |---|---|---|
 | [T · Autonomy Tier](taxonomy/axes/autonomy-tier/README.md) | 5 tiers (T0–T4) + residual status U · 6 modifiers | How much the system does on its own, and who provides the fallback. |
-| [O · Operational Design Domain (ODD)](taxonomy/axes/operational-design-domain/README.md) | Open set · 52 candidate use cases across 8 lines of business · 4 multiplying factors | Where the system is allowed to work. |
+| [O · Operational Design Domain (ODD)](taxonomy/axes/operational-design-domain/README.md) | Open set · 52 candidate use cases across 9 lines of business · 4 multiplying factors | Where the system is allowed to work. |
 | [A+ / A- · Action Class](taxonomy/axes/action-class/README.md) | 12 classes (A1–A12), graded by reversibility & consequence | What the system is allowed to do. |
 | [C · Control Envelope](taxonomy/axes/control-envelope/README.md) | 55 named controls across 6 layers | What contains the system. |
 
@@ -73,8 +73,10 @@ agent-reliability-profile-taxonomy/
 │   │       └── control-plane.md
 │   └── cross-axis/
 │       └── agent-building-platforms.md
+├── vocab/                       # Generated: taxonomy vocabularies in the Profile Kit's JSON format
 ├── scripts/
 │   ├── generate_tables.py       # Validates the YAML and regenerates Markdown tables (--check in CI)
+│   ├── export_vocab.py          # Writes vocab/ in the Profile Kit's format; compares with a Kit release
 │   └── build_docs.sh            # Assembles docs/ for the MkDocs site
 ├── .github/
 │   ├── ISSUE_TEMPLATE/          # Use-case submission, control submission, taxonomy contribution, bug report
@@ -116,7 +118,7 @@ The claim is bounded in time, expires on boundary crossing, and jointly fixes th
 
 ### Axis > Group > Value
 
-Each axis is organized as a small hierarchy. **Axes** capture the four properties every deploying institution already recognizes: how much the system does on its own, where it may work, what it may do, and what contains it. **Groups** subdivide by a single explicit rule (autonomy tiers vs. modifiers; lines of business; control layers). **Values** are the atomic units with canonical IDs (`T2`, `ODD.30`, `A9`, `CE.HARNESS.9`) that Profiles, tools, and supervisory analysis can reference.
+Each axis is organized as a small hierarchy. **Axes** capture the four properties every deploying institution already recognizes: how much the system does on its own, where it may work, what it may do, and what contains it. **Groups** subdivide by a single explicit rule (autonomy tiers vs. modifiers; lines of business; control layers). **Values** are the atomic units with canonical IDs (`T2`, `ODD.30`, `A9`, `harness.kill_switch`) that Profiles, tools, and supervisory analysis can reference.
 
 ### The Taxonomy Standardizes the Schema, Not the Instances
 
@@ -142,9 +144,13 @@ The taxonomy is built to satisfy the nine requirements set out in the preprint (
 
 **Supervisors and standards bodies**: Reference axis values by canonical ID when specifying expectations, comparing deployments across firms, or identifying outliers. The [crosswalk](taxonomy/crosswalk.md) maps each axis to existing frameworks.
 
-**Assurance firms and tool builders**: [`taxonomy.yaml`](taxonomy/taxonomy.yaml) and [`profile.yaml`](taxonomy/profile.yaml) are the machine-readable sources. Build against canonical IDs, not display names.
+**Assurance firms and tool builders**: [`taxonomy.yaml`](taxonomy/taxonomy.yaml) is the machine-readable source. Build against canonical IDs, not display names. The same IDs are used by the Agent Reliability Profile Kit; `scripts/export_vocab.py` writes the taxonomy in the Kit's vocabulary format.
 
 **Contributors**: See [CONTRIBUTING.md](CONTRIBUTING.md) to propose a new use case, a new control, a crosswalk mapping, a worked example, or a structural change.
+
+## Relationship to the Profile Kit
+
+This repository is the source of truth for the four axes: IDs, labels, and definitions. The Agent Reliability Profile Kit (specification, conformance suite, and reference tools) consumes them as JSON vocabularies. `scripts/export_vocab.py` writes those files to [`vocab/`](vocab/); a Kit release pins a tagged taxonomy version and copies them. The Profile artifact itself (sections, provenance, assurance levels, conformance rules) is specified in the Kit.
 
 ## Status
 

@@ -54,12 +54,12 @@ Six modifiers are stated on the Profile alongside the tier and are material at a
 
 | ID | Modifier | What it records |
 |---|---|---|
-| `MOD.data-authority` | Data authority | Sensitivity of what the agent may access, independent of action capability. Can raise the risk of a read-only deployment materially. |
-| `MOD.reversibility-profile` | Reversibility profile | Whether agent action can be undone without a heavy penalty. |
-| `MOD.customer-market-impact` | Customer & market impact | Who is affected (internal, customer, market, regulator, counterparty) and how badly. |
-| `MOD.stack-composability` | Stack composability | Whether the tool surface is predefined in advance or dynamically assembled at runtime. |
-| `MOD.integrated-stack-accountability` | Integrated-stack accountability | Who stands behind the model, harness, and infrastructure as a whole. |
-| `MOD.population-scope` | Population scope | Range of parties the agentic system can affect. |
+| `data_authority` | Data authority | Sensitivity of what the agent may access, independent of action capability. Can raise the risk of a read-only deployment materially. |
+| `reversibility_profile` | Reversibility profile | Whether agent action can be undone without a heavy penalty. |
+| `customer_market_impact` | Customer and market impact | Who is affected (internal, customer, market, regulator, counterparty) and how badly. |
+| `stack_composability` | Stack composability | Whether the tool surface is predefined in advance or dynamically assembled at runtime. |
+| `accountability` | Integrated-stack accountability | Who stands behind the model, harness, and infrastructure as a whole. |
+| `population_scope` | Population scope | Range of parties the agentic system can affect. |
 
 <!-- END GENERATED: modifier-table -->
 

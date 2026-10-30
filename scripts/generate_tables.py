@@ -50,7 +50,7 @@ AXES_DIR = "taxonomy/axes"
 EXPECTED = {
     "tiers": 5,
     "modifiers": 6,
-    "business_lines": 8,
+    "business_lines": 9,
     "use_cases": 52,
     "action_classes": 12,
     "layers": 6,
@@ -141,25 +141,31 @@ def validate(tax: dict, ex: dict) -> list[str]:
         if counts[k] != v:
             errors.append(f"count mismatch for {k}: expected {v}, found {counts[k]}")
 
-    # Use-case numbering must be contiguous (ODD.1 .. ODD.n) in listed order.
-    n = 0
+    # Use cases: exactly ODD.1 .. ODD.n, each assigned to one business line.
+    # (Business lines follow preprint Section 4.2 order, so treasury_finance
+    # (ODD.43-45) is listed before insurance (ODD.41-42).)
+    nums = sorted(int(uc["id"].split(".")[1]) for bl in odd["business_lines"] for uc in bl["use_cases"])
+    if nums != list(range(1, len(nums) + 1)):
+        errors.append(f"use-case IDs are not exactly ODD.1..ODD.{len(nums)}")
+    slug = re.compile(r"^[a-z][a-z0-9_]*$")
     for bl in odd["business_lines"]:
-        for uc in bl["use_cases"]:
-            n += 1
-            if uc["id"] != f"ODD.{n}":
-                errors.append(f"use-case numbering break: expected ODD.{n}, found {uc['id']}")
+        if not slug.match(bl["id"]):
+            errors.append(f"business-line id is not a snake_case slug: {bl['id']}")
+    for m in at["modifiers"]["values"]:
+        if not slug.match(m["id"]):
+            errors.append(f"modifier id is not a snake_case slug: {m['id']}")
 
     # Action classes A1..A12 in order.
     for i, c in enumerate(ac["classes"], start=1):
         if c["id"] != f"A{i}":
             errors.append(f"action-class order break: expected A{i}, found {c['id']}")
 
-    # Controls numbered 1..n within each layer, with the layer code prefix.
+    # Control IDs are <layer>.<slug>; list order within a layer is the ordinal.
+    ctl_id = re.compile(r"^[a-z_]+\.[a-z][a-z0-9_]*$")
     for layer in ce["layers"]:
-        for i, ctl in enumerate(layer["controls"], start=1):
-            want = f"CE.{layer['code']}.{i}"
-            if ctl["id"] != want:
-                errors.append(f"control id break in {layer['id']}: expected {want}, found {ctl['id']}")
+        for ctl in layer["controls"]:
+            if not ctl_id.match(ctl["id"]) or not ctl["id"].startswith(layer["id"] + "."):
+                errors.append(f"control id {ctl['id']} must be '{layer['id']}.<snake_case_slug>'")
 
     # Examples.
     for e in ex.get("examples", []):
@@ -251,7 +257,7 @@ def r_tree(tax: dict, ex: dict) -> str:
     bls = odd["business_lines"]
     for i, bl in enumerate(bls):
         ucs = bl["use_cases"]
-        rng = f"{ucs[0]['id']}–{ucs[-1]['id'].split('.')[1]}"
+        rng = f"{ucs[0]['id']}–{ucs[-1]['id'].split('.')[1]}" if len(ucs) > 1 else ucs[0]["id"]
         lines.append(f"│   │   {'└' if i == len(bls) - 1 else '├'}── {bl['name']} ({len(ucs)})  {rng}")
     lines.append("│   └── Multiplying factors")
     mfs = odd["multiplying_factors"]
@@ -293,18 +299,18 @@ def r_business_line_summary(tax: dict, ex: dict) -> str:
     rows = []
     for bl in odd["business_lines"]:
         ucs = bl["use_cases"]
-        rows.append([f"[{bl['name']}](use-cases.md#{bl['id']})", str(len(ucs)),
+        rows.append([f"[{bl['name']}](use-cases.md#{bl['id']})", f"`{bl['id']}`", str(len(ucs)),
                      f"{ucs[0]['id']} – {ucs[-1]['id']}"])
     total = sum(len(b["use_cases"]) for b in odd["business_lines"])
-    rows.append(["**Total**", f"**{total}**", ""])
-    return table(["Line of business", "Use cases", "IDs"], rows)
+    rows.append(["**Total**", "", f"**{total}**", ""])
+    return table(["Line of business", "ID", "Use cases", "Use-case IDs"], rows)
 
 
 def r_use_case_catalog(tax: dict, ex: dict) -> str:
     odd = axis(tax, "operational-design-domain")
     parts = []
     for bl in odd["business_lines"]:
-        parts.append(f'<a id="{bl["id"]}"></a>\n\n### {bl["name"]} ({len(bl["use_cases"])})\n')
+        parts.append(f'<a id="{bl["id"]}"></a>\n\n### {bl["name"]} ({len(bl["use_cases"])}) · `{bl["id"]}`\n')
         parts.append(table(["ID", "Use case"], [[f"`{u['id']}`", u["name"]] for u in bl["use_cases"]]))
         parts.append("")
     return "\n".join(parts).rstrip()
@@ -324,9 +330,9 @@ def r_action_class_table(tax: dict, ex: dict) -> str:
 
 def r_layer_summary(tax: dict, ex: dict) -> str:
     ce = axis(tax, "control-envelope")
-    rows = [[f"[{l['name']}]({l['id']}.md)", str(len(l["controls"])),
+    rows = [[f"[{l['name']}]({l['page']}.md)", str(len(l["controls"])),
              "All deployments" if l["applies_to"] == "all" else l["applies_to"].capitalize(),
-             f"`CE.{l['code']}.n`"] for l in ce["layers"]]
+             f"`{l['id']}.<slug>`"] for l in ce["layers"]]
     total = sum(len(l["controls"]) for l in ce["layers"])
     rows.append(["**Total**", f"**{total}**", "", ""])
     return table(["Layer", "Controls", "Applies to", "ID pattern"], rows)
@@ -336,7 +342,8 @@ def make_control_table(layer_id: str):
     def render(tax: dict, ex: dict) -> str:
         ce = axis(tax, "control-envelope")
         layer = next(l for l in ce["layers"] if l["id"] == layer_id)
-        return table(["ID", "Control"], [[f"`{c['id']}`", c["name"]] for c in layer["controls"]])
+        return table(["#", "ID", "Control"],
+                     [[str(i), f"`{c['id']}`", c["name"]] for i, c in enumerate(layer["controls"], start=1)])
     return render
 
 
@@ -393,8 +400,9 @@ TARGETS: list[tuple[str, str, object, str]] = [
     (f"{AXES_DIR}/control-envelope/README.md", "layer-summary", r_layer_summary, "taxonomy/taxonomy.yaml"),
     ("taxonomy/examples-overview.md", "examples-overview", r_examples_overview, "taxonomy/examples.yaml"),
 ]
-for _layer in ("model", "tool", "harness", "environment", "inter-agent", "control-plane"):
-    TARGETS.append((f"{AXES_DIR}/control-envelope/{_layer}.md", "control-table",
+for _layer, _page in (("model", "model"), ("tool", "tool"), ("harness", "harness"), ("environment", "environment"),
+                      ("inter_agent", "inter-agent"), ("control_plane", "control-plane")):
+    TARGETS.append((f"{AXES_DIR}/control-envelope/{_page}.md", "control-table",
                     make_control_table(_layer), "taxonomy/taxonomy.yaml"))
 
 
