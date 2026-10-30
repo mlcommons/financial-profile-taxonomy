@@ -6,38 +6,38 @@
     {
       "id": "T0",
       "label": "No action capability",
-      "agent": "No action capability. Read-only or suggestion-only. A person performs the operative task.",
+      "agent": "Read-only or suggestion-only. A person performs the operative task.",
       "fallback": "Inapplicable: the person is the operator."
     },
     {
       "id": "T1",
       "label": "Assists individual actions",
-      "agent": "Assists individual actions. A person invokes each one explicitly. No chaining across a multi-step task.",
+      "agent": "A person invokes each action explicitly. No chaining across a multi-step task.",
       "fallback": "The person, continuously and by construction."
     },
     {
       "id": "T2",
-      "label": "Bounded multi-step execution",
-      "agent": "Executes a multi-step task inside a strictly bounded envelope. A person approves every material action and is shown the specific resource that will be affected.",
+      "label": "Bounded multi-step execution with approval",
+      "agent": "Executes a multi-step task inside a strictly bounded envelope. A person approves every material action and is shown the specific resource affected.",
       "fallback": "The person, continuously."
     },
     {
       "id": "T3",
-      "label": "Handles the whole task",
-      "agent": "Handles the whole task inside its envelope. Requests help on uncertainty or on defined hazard triggers.",
+      "label": "Whole task with escalation",
+      "agent": "Handles the whole task inside its envelope. Requests help on uncertainty or defined hazard triggers.",
       "fallback": "The person, on the system's request, after a handoff. The handoff is where the risk resides."
     },
     {
       "id": "T4",
-      "label": "Bounded autonomy",
+      "label": "No contemporaneous approval",
       "agent": "Operates inside a bounded envelope with no contemporaneous approval. Out-of-envelope actions are blocked in software.",
       "fallback": "The system, into a defined and tested safe state, to the extent possible. A person is notified afterwards."
     },
     {
       "id": "U",
       "label": "Unprofiled (status, not a tier)",
-      "agent": "A status, not an autonomy mode: no reliability claim is available. The envelope, the fallback, or the action boundaries are unspecified.",
-      "fallback": "Undefined. A finding requiring remediation, suspension of agent workflows, or documented high-risk acceptance."
+      "agent": "No reliability claim is available: envelope, fallback or action boundaries are unspecified.",
+      "fallback": "Undefined. U is a finding requiring remediation, suspension of agent workflows, or documented high risk acceptance."
     }
   ],
   "modifiers": [

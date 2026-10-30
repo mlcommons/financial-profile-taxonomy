@@ -26,9 +26,9 @@ Agent Reliability Profile: operating boundary  S(D) = (T, O, A+, A-, C)
 │   ├── Tiers
 │   │   ├── T0  No action capability
 │   │   ├── T1  Assists individual actions
-│   │   ├── T2  Bounded multi-step execution
-│   │   ├── T3  Handles the whole task  [high scrutiny]
-│   │   ├── T4  Bounded autonomy
+│   │   ├── T2  Bounded multi-step execution with approval
+│   │   ├── T3  Whole task with escalation  [high scrutiny]
+│   │   ├── T4  No contemporaneous approval
 │   │   └── U   Unprofiled (a status, not a tier)
 │   └── Cross-cutting modifiers
 │       ├── Data authority

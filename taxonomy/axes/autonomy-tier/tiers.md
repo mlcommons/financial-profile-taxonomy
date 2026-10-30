@@ -6,15 +6,15 @@
 
 **Splitting rule:** What the agent does, and who or what provides the fallback when the system cannot continue.
 
-**Values:** T0, T1, T2, T3, T4, and the residual status U.
+**Values:** T0, T1, T2, T3, T4, and the residual status U. Tier names and definitions are those of the Profile Kit, drawn from Table 1 of the preprint.
 
 ---
 
 ## T0 · No action capability
 
-**What the agent does:** No action capability. Read-only or suggestion-only. A person performs the operative task.
+**What the agent does:** Read-only or suggestion-only. A person performs the operative task.
 
-**Fallback:** Inapplicable; the person is the operator.
+**Fallback:** Inapplicable: the person is the operator.
 
 **Example:** A research tool drafts an earnings-call summary; the analyst publishes under their own name.
 
@@ -22,7 +22,7 @@
 
 ## T1 · Assists individual actions
 
-**What the agent does:** Assists individual actions. A person invokes each one explicitly. No chaining across a multi-step task.
+**What the agent does:** A person invokes each action explicitly. No chaining across a multi-step task.
 
 **Fallback:** The person, continuously and by construction.
 
@@ -30,9 +30,9 @@
 
 ---
 
-## T2 · Bounded multi-step execution
+## T2 · Bounded multi-step execution with approval
 
-**What the agent does:** Executes a multi-step task inside a strictly bounded envelope. A person approves every material action and is shown the specific resource that will be affected.
+**What the agent does:** Executes a multi-step task inside a strictly bounded envelope. A person approves every material action and is shown the specific resource affected.
 
 **Fallback:** The person, continuously.
 
@@ -52,13 +52,13 @@
 
 ---
 
-## T3 · Handles the whole task
+## T3 · Whole task with escalation
 
 > **High scrutiny.** The handoff is where the risk resides.
 
-**What the agent does:** Handles the whole task inside its envelope. Requests help on uncertainty or on defined hazard triggers.
+**What the agent does:** Handles the whole task inside its envelope. Requests help on uncertainty or defined hazard triggers.
 
-**Fallback:** The person, on the system's request, after a handoff.
+**Fallback:** The person, on the system's request, after a handoff. The handoff is where the risk resides.
 
 **Example:** A trade-surveillance agent closes low-scoring alerts with documented rationale, and escalates any alert involving a restricted security or an unknown pattern.
 
@@ -73,7 +73,7 @@
 
 ---
 
-## T4 · Bounded autonomy
+## T4 · No contemporaneous approval
 
 **What the agent does:** Operates inside a bounded envelope with no contemporaneous approval. Out-of-envelope actions are blocked in software.
 
@@ -93,11 +93,11 @@
 
 ## U · Unprofiled (a status, not a tier)
 
-**Description:** No reliability claim is available. The envelope, the fallback, or the action boundaries are unspecified.
+**Description:** No reliability claim is available: envelope, fallback or action boundaries are unspecified.
 
 **Fallback:** Undefined.
 
-**Consequence:** A finding requiring remediation, suspension of agent workflows, or documented high-risk acceptance.
+**Consequence:** U is a finding requiring remediation, suspension of agent workflows, or documented high risk acceptance.
 
 **Rule:** Unevidenced tier claims are treated as unprofiled.
 

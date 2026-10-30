@@ -26,9 +26,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Notes on sources
 - The preprint governs where sources differ.
 - Lines of business: nine, as named in preprint Section 4.2. Appendix B.2 of the preprint and the companion one-pager group "Insurance and treasury" together; here `ODD.41`–`ODD.42` are insurance and `ODD.43`–`ODD.45` treasury and finance (matching the Profile Kit). Appendix B.2 should be updated to match Section 4.2.
-- Labels for use cases, action classes, and controls follow the preprint (Appendix B.2, Table 2, Appendix B.4); tier names, which the preprint does not give, follow the companion one-pager.
+- Labels for use cases, action classes, and controls follow the preprint (Appendix B.2, Table 2, Appendix B.4); tier names and definitions, which the preprint gives in Table 1 without names, follow the Profile Kit (arp/1.0-rc2).
 - The preprint's contributions list (Section 1.2) names a "Profile Verifier"; Section 6.1 describes Level 3 as the Profile Validator operated by a qualified independent assessor. This repository follows Section 6.1.
-- Modifier name: Section 4.1 says "accountability"; Appendix B.1 and the one-pager say "integrated-stack accountability". This repository uses the latter.
+- Modifier name: Section 4.1 says "accountability"; Appendix B.1 and the one-pager say "integrated-stack accountability". The ID is `accountability` (as in the Profile Kit) and the label is the full name.
 - ODD definition: Section 4.2 lists jurisdiction; the Appendix D glossary lists tool surface and omits jurisdiction. The glossary here includes both.
 - Provenance types: Table 3 and Section 5.2 give five (including document-derived); the Appendix D glossary gives four. This repository uses five.
 - Platform invalidation: Section 2.5 (P6) says substrate or skill updates invalidate only directly dependent Profiles; Section 5.3 and the one-pager say a *material* substrate change voids every anchored Profile. This repository follows the one-pager; the two readings reconcile only through "material".

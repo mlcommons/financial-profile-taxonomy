@@ -31,7 +31,8 @@
 #   Action classes   A<n>
 #   Controls         <layer>.<slug>   e.g. harness.kill_switch (candidates: <layer>.x_<slug>)
 # Labels for use cases, action classes, and controls follow the preprint
-# (Appendix B.2, Table 2, Appendix B.4); tier names follow the companion one-pager.
+# (Appendix B.2, Table 2, Appendix B.4); tier names and definitions follow
+# the Profile Kit (arp/1.0-rc2).
 #
 # This file is the single source of truth. Tables in the Markdown docs are
 # regenerated from it by scripts/generate_tables.py.
@@ -116,9 +117,9 @@ axes:
       - id: T0
         name: No action capability
         does: >
-          No action capability. Read-only or suggestion-only. A person performs
-          the operative task.
-        fallback: "Inapplicable: the person is the operator."
+          Read-only or suggestion-only. A person performs the operative task.
+        fallback: >
+          Inapplicable: the person is the operator.
         example: >
           A research tool drafts an earnings-call summary; the analyst
           publishes under their own name.
@@ -126,20 +127,21 @@ axes:
       - id: T1
         name: Assists individual actions
         does: >
-          Assists individual actions. A person invokes each one explicitly. No
-          chaining across a multi-step task.
-        fallback: "The person, continuously and by construction."
+          A person invokes each action explicitly. No chaining across a multi-step task.
+        fallback: >
+          The person, continuously and by construction.
         example: >
           A relationship manager asks the tool to draft one client email
           explaining a fee change, edits it, and sends it themselves.
 
       - id: T2
-        name: Bounded multi-step execution
+        name: Bounded multi-step execution with approval
         does: >
           Executes a multi-step task inside a strictly bounded envelope. A
           person approves every material action and is shown the specific
-          resource that will be affected.
-        fallback: "The person, continuously."
+          resource affected.
+        fallback: >
+          The person, continuously.
         example: >
           A loan-origination agent pulls credit, verifies income, location, and
           credit history, and populates the application, but pauses before each
@@ -154,11 +156,11 @@ axes:
           - "Habituation testing: catch rate for injected, benign, materially incorrect proposals, blocked before consequence"
 
       - id: T3
-        name: Handles the whole task
+        name: Whole task with escalation
         scrutiny: high
         does: >
           Handles the whole task inside its envelope. Requests help on
-          uncertainty or on defined hazard triggers.
+          uncertainty or defined hazard triggers.
         fallback: >
           The person, on the system's request, after a handoff. The handoff is
           where the risk resides.
@@ -175,7 +177,7 @@ axes:
           - "Actions taken during the delay"
 
       - id: T4
-        name: Bounded autonomy
+        name: No contemporaneous approval
         does: >
           Operates inside a bounded envelope with no contemporaneous approval.
           Out-of-envelope actions are blocked in software.
@@ -197,12 +199,12 @@ axes:
       name: Unprofiled
       is_tier: false
       description: >
-        A status, not an autonomy mode: no reliability claim is available. The
-        envelope, the fallback, or the action boundaries are unspecified.
+        No reliability claim is available: envelope, fallback or action
+        boundaries are unspecified.
       fallback: "Undefined."
       consequence: >
-        A finding requiring remediation, suspension of agent workflows, or
-        documented high-risk acceptance.
+        U is a finding requiring remediation, suspension of agent workflows,
+        or documented high risk acceptance.
       rule: "Unevidenced tier claims are treated as unprofiled."
 
     principles:
