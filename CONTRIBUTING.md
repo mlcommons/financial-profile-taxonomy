@@ -72,6 +72,7 @@ The script validates that IDs are unique and contiguous, that counts match the e
 - Customer data, credentials, secrets, or internal system names
 - Vendor marketing claims presented as evidence
 - Prescriptive requirements on which envelope an institution must choose (on the control axis the taxonomy is descriptive)
+- Changes to the Profile rules (sections, evidence classes, assurance levels, conformance): propose these to the Profile Kit's specification
 - Changes to scope outside operational reliability (fairness, explainability, consumer compliance, cybersecurity adequacy), which are governed by their own frameworks
 
 ## How to Submit

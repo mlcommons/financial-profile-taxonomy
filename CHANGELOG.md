@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Axis 3, Action Class: 12 classes (A1–A12) graded by reversibility and consequence, recorded as a permitted set A+ and prohibited set A-
 - Axis 4, Control Envelope: 55 named controls across 6 layers (model, tool, harness, environment, inter-agent, control plane)
 - Cross-axis case for agent-building platforms: Platform Baseline Profile, platform anchor, and six required properties (P1–P6)
-- `taxonomy/profile.yaml`: Profile sections, provenance types, floors, assurance Levels 1–3, benchmark comparability flag, headline-level rule, invalidation triggers, and Profile Package contents
+- `taxonomy/profile.yaml`: a pointer to the Profile specification in the Profile Kit, which governs the Profile artifact, and a record of which vocabularies each repository owns; `profile-artifact.md` and `assurance-levels.md` are explanatory summaries
 - `taxonomy/examples.yaml`: two worked bounded claims (coding agent; financial-crime alert-triage agent) with proposed action-class and control mappings
 - Canonical IDs shared with the Agent Reliability Profile Kit (arp/1.0-rc2): `T0`–`T4`, `U`, snake_case modifier and business-line slugs, `ODD.1`–`ODD.52`, `A1`–`A12`, and `<layer>.<slug>` control IDs (e.g., `harness.kill_switch`)
 - `scripts/export_vocab.py` writes the taxonomy in the Kit's vocabulary format and compares it with a Kit release

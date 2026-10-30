@@ -1,6 +1,8 @@
 # The Profile Artifact
 
-The four axes define the option universe. The **Agent Reliability Profile** is the single artifact that records one deployment's values on those axes, with the evidence and conditions that back them. Machine-readable source: [`profile.yaml`](profile.yaml).
+The four axes define the option universe. The **Agent Reliability Profile** is the single artifact that records one deployment's values on those axes, with the evidence and conditions that back them.
+
+> **Explanatory summary.** This page summarizes the preprint for readers of the taxonomy. The normative rules for a Profile are in the Agent Reliability Profile Specification in the Profile Kit (`arp/1.0-rc2`); where the two differ, the specification governs.
 
 ## Formal Structure
 

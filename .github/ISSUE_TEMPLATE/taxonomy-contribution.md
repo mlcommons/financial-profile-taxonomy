@@ -12,7 +12,6 @@ labels: ["contribution", "triage"]
 - [ ] Action class: new, split, merged, or reordered class
 - [ ] Control layer
 - [ ] Agent-building platform case
-- [ ] Profile artifact or assurance vocabulary (`profile.yaml`)
 - [ ] Other
 
 ## Affected Axis and IDs

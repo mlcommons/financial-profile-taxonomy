@@ -43,11 +43,11 @@ agent-reliability-profile-taxonomy/
 ├── mkdocs.yml                   # Documentation site configuration
 ├── taxonomy/
 │   ├── taxonomy.yaml            # Machine-readable option universe for the four axes (source of truth)
-│   ├── profile.yaml             # Machine-readable Profile artifact vocabulary (sections, provenance, assurance levels)
+│   ├── profile.yaml             # Pointer: the Profile itself is specified in the Profile Kit; who owns which vocabulary
 │   ├── examples.yaml            # Worked bounded claims, validated against taxonomy.yaml
 │   ├── taxonomy-overview.md     # Human-readable summary with tree diagram
-│   ├── profile-artifact.md      # The Profile, its provenance map, validity, and Profile Package
-│   ├── assurance-levels.md      # Levels 1-3 and the benchmark comparability flag
+│   ├── profile-artifact.md      # Explanatory summary of the Profile (normative rules are in the Kit)
+│   ├── assurance-levels.md      # Explanatory summary of Levels 1-3 and the benchmark flag
 │   ├── examples-overview.md     # Auto-generated catalog of worked examples
 │   ├── crosswalk.md             # Crosswalk to NIST AI RMF, EU AI Act, CRI Profile, ISO/IEC 42001
 │   ├── glossary.md              # Terms of art
@@ -150,7 +150,7 @@ The taxonomy is built to satisfy the nine requirements set out in the preprint (
 
 ## Relationship to the Profile Kit
 
-This repository is the source of truth for the four axes: IDs, labels, and definitions. The Agent Reliability Profile Kit (specification, conformance suite, and reference tools) consumes them as JSON vocabularies. `scripts/export_vocab.py` writes those files to [`vocab/`](vocab/); a Kit release pins a tagged taxonomy version and copies them. The Profile artifact itself (sections, provenance, assurance levels, conformance rules) is specified in the Kit.
+This repository is the source of truth for the four axes: IDs, labels, and definitions. The Agent Reliability Profile Kit (specification, conformance suite, and reference tools) consumes them as JSON vocabularies. `scripts/export_vocab.py` writes those files to [`vocab/`](vocab/); a Kit release pins a tagged taxonomy version and copies them. The Profile artifact itself (sections, provenance, assurance levels, conformance rules) is specified in the Kit's specification, which governs; this repository's Profile pages are explanatory summaries, and [`profile.yaml`](taxonomy/profile.yaml) records which vocabularies each repository owns. Proposals to change the Profile rules go to the Kit.
 
 ## Status
 

@@ -1,6 +1,8 @@
 # Assurance Levels and the Benchmark Comparability Flag
 
-Not every agent needs the same assurance. The Profile keeps the **same shape at every level**: the axes, components, and definitions are standardized, while the rigor and independence of the evidence adjust. Machine-readable source: [`profile.yaml`](profile.yaml).
+Not every agent needs the same assurance. The Profile keeps the **same shape at every level**: the axes, components, and definitions are standardized, while the rigor and independence of the evidence adjust.
+
+> **Explanatory summary.** This page summarizes the preprint for readers of the taxonomy. The normative rules for a Profile are in the Agent Reliability Profile Specification in the Profile Kit (`arp/1.0-rc2`); where the two differ, the specification governs.
 
 Three **production assurance levels** form a single ordered scale of evidence and independence about the deployment in its own environment. A separate **benchmark comparability flag** is a different measurement, trading production fidelity for cross-institution comparability.
 

@@ -25,9 +25,9 @@ Documentation following the "Datasheets for Datasets" framework (Gebru et al., 2
 | Control layers | 6 | `taxonomy/taxonomy.yaml` |
 | Named controls | 55 | `taxonomy/taxonomy.yaml` |
 | Platform properties | 6 | `taxonomy/taxonomy.yaml` |
-| Profile sections | 10 | `taxonomy/profile.yaml` |
-| Assurance levels | 3 + benchmark comparability flag | `taxonomy/profile.yaml` |
 | Worked examples | 2 | `taxonomy/examples.yaml` |
+
+The Profile artifact itself (sections, evidence classes, assurance levels, invalidation triggers) is specified in the Profile Kit, not here; `taxonomy/profile.yaml` records where, and which vocabularies each repository owns.
 
 **Does it contain data about real deployments or individuals?** No. The taxonomy is an option universe. Worked examples are illustrative. Use-case names describe categories of activity, not specific institutions.
 
