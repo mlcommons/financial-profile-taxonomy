@@ -1,7 +1,7 @@
 {
   "vocabulary": "arp-taxonomy/0.1.0/control-catalogue",
   "version": "0.1.0",
-  "source": "mlcommons/agent-reliability-profile-taxonomy, taxonomy/taxonomy.yaml (generated)",
+  "source": "mlcommons/financial-profile-taxonomy, taxonomy/taxonomy.yaml (generated)",
   "layers": [
     "model",
     "tool",

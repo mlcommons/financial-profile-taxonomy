@@ -3,9 +3,9 @@ site_description: >
   A four-axis vocabulary (autonomy tier, operational design domain, action
   class, control envelope) for bounded, falsifiable reliability claims about
   deployed AI agents in financial services.
-site_url: https://mlcommons.github.io/agent-reliability-profile-taxonomy/
-repo_url: https://github.com/mlcommons/agent-reliability-profile-taxonomy
-repo_name: mlcommons/agent-reliability-profile-taxonomy
+site_url: https://mlcommons.github.io/financial-profile-taxonomy/
+repo_url: https://github.com/mlcommons/financial-profile-taxonomy
+repo_name: mlcommons/financial-profile-taxonomy
 docs_dir: docs
 # docs/ is assembled from the repository Markdown by scripts/build_docs.sh.
 theme:

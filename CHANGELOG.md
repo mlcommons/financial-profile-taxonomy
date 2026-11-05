@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Crosswalk to NIST AI RMF, EU AI Act, CRI Profile, and ISO/IEC 42001; glossary
 - Contribution guidelines, issue and pull request templates, governance documentation, datasheet
 
+### Repository
+- Published as `mlcommons/financial-profile-taxonomy`; documentation site `mlcommons.github.io/financial-profile-taxonomy`. Prepared under the working name `agent-reliability-profile-taxonomy`.
+
 ### Notes on sources
 - The preprint governs where sources differ.
 - Lines of business: nine, as named in preprint Section 4.2. Appendix B.2 of the preprint and the companion one-pager group "Insurance and treasury" together; here `ODD.41`–`ODD.42` are insurance and `ODD.43`–`ODD.45` treasury and finance (matching the Profile Kit). Appendix B.2 should be updated to match Section 4.2.

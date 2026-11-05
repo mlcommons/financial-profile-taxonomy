@@ -50,7 +50,7 @@ def build() -> dict[str, dict]:
 
     def head(name: str) -> dict:
         return {"vocabulary": f"arp-taxonomy/{ver}/{name}", "version": ver,
-                "source": "mlcommons/agent-reliability-profile-taxonomy, taxonomy/taxonomy.yaml (generated)"}
+                "source": "mlcommons/financial-profile-taxonomy, taxonomy/taxonomy.yaml (generated)"}
 
     u = at["residual_status"]
     tiers = [{"id": t["id"], "label": t["name"], "agent": norm(t["does"]), "fallback": norm(t["fallback"])}

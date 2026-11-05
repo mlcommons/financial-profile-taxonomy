@@ -33,7 +33,7 @@ Plus one cross-axis case, [agent-building platforms](taxonomy/cross-axis/agent-b
 ## Repository Structure
 
 ```
-agent-reliability-profile-taxonomy/
+financial-profile-taxonomy/
 ├── README.md                    # This file
 ├── CHANGELOG.md                 # Version history
 ├── CITATION.cff                 # Machine-readable citation metadata
@@ -150,7 +150,7 @@ The taxonomy is built to satisfy the nine requirements set out in the preprint (
 
 ## Relationship to the Profile Kit
 
-This repository is the source of truth for the four axes: IDs, labels, and definitions. The [Agent Reliability Profile Kit](https://github.com/mlcommons/agent-reliability-profile-kit) (specification, conformance suite, and reference tools) consumes them as JSON vocabularies; its `COMPATIBILITY.md` states which taxonomy release each Kit release pins. `scripts/export_vocab.py` writes those files to [`vocab/`](vocab/); a Kit release pins a tagged taxonomy version and copies them. The Profile artifact itself (sections, provenance, assurance levels, conformance rules) is specified in the Kit's specification, which governs; this repository's Profile pages are explanatory summaries, and [`profile.yaml`](taxonomy/profile.yaml) records which vocabularies each repository owns. Proposals to change the Profile rules go to the Kit.
+This repository is the source of truth for the four axes: IDs, labels, and definitions. The [Agent Reliability Profile Kit](https://github.com/mlcommons/financial-profile-kit) (specification, conformance suite, and reference tools) consumes them as JSON vocabularies; its `COMPATIBILITY.md` states which taxonomy release each Kit release pins. `scripts/export_vocab.py` writes those files to [`vocab/`](vocab/); a Kit release pins a tagged taxonomy version and copies them. The Profile artifact itself (sections, provenance, assurance levels, conformance rules) is specified in the Kit's specification, which governs; this repository's Profile pages are explanatory summaries, and [`profile.yaml`](taxonomy/profile.yaml) records which vocabularies each repository owns. Proposals to change the Profile rules go to the Kit.
 
 ## Status
 

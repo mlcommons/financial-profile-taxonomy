@@ -1,7 +1,7 @@
 {
   "vocabulary": "arp-taxonomy/0.1.0/business-lines",
   "version": "0.1.0",
-  "source": "mlcommons/agent-reliability-profile-taxonomy, taxonomy/taxonomy.yaml (generated)",
+  "source": "mlcommons/financial-profile-taxonomy, taxonomy/taxonomy.yaml (generated)",
   "note": "The ODD is an open set; only its schema and top-level business lines are standardised.",
   "terms": [
     "retail_consumer_banking",

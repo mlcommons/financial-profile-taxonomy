@@ -5,8 +5,8 @@ type: dataset
 license: CC-BY-4.0
 version: 0.1.0
 date-released: 2026-10-29
-url: https://github.com/mlcommons/agent-reliability-profile-taxonomy
-repository-code: https://github.com/mlcommons/agent-reliability-profile-taxonomy
+url: https://github.com/mlcommons/financial-profile-taxonomy
+repository-code: https://github.com/mlcommons/financial-profile-taxonomy
 authors:
   - name: MLCommons Financial Services Working Group
 keywords:
